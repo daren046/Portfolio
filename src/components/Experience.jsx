@@ -170,7 +170,7 @@ const Experience = () => {
     },
     {
       id: 'exp-2',
-      company: 'Entreprise BDD',
+      company: 'Vivendi',
       position: 'Admin Base de Données',
       period: 'Oct. 2022 - Fév. 2023',
       location: 'Paris',
@@ -189,7 +189,7 @@ const Experience = () => {
     {
       id: 'edu-1',
       school: 'Université Gustave Eiffel',
-      degree: 'Master Logiciel & Systèmes',
+      degree: 'Master Logiciel & Ingénierie des données',
       period: '2022 - 2025',
       location: 'Champs-sur-Marne',
       status: 'Diplômé'
