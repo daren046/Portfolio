@@ -12,7 +12,7 @@ const About = () => {
 
   const highlights = [
     { label: 'Spécialité', value: 'Java / Spring Boot' },
-    { label: 'Frontend', value: 'React / Angular' },
+    { label: 'Frontend', value: 'React / TypeScript' },
     { label: 'Formation', value: 'Master Gustave Eiffel' },
     { label: 'Localisation', value: 'Île-de-France' },
   ]
@@ -76,9 +76,9 @@ const About = () => {
                   initial={{ opacity: 0, scale: 0 }}
                   animate={inView ? { opacity: 1, scale: 1 } : {}}
                   transition={{ delay: 0.8 }}
-                  className="absolute -top-3 -right-3 bg-primary-500 text-white px-4 py-2 rounded-full font-mono text-sm shadow-lg"
+                  className="absolute -top-3 -right-3 bg-primary-500 text-white px-4 py-2 rounded-full font-mono text-sm shadow-lg shadow-primary-500/25"
                 >
-                  3+ ans XP
+                  5+ ans XP
                 </motion.div>
                 <motion.div
                   initial={{ opacity: 0, scale: 0 }}
@@ -105,14 +105,15 @@ const About = () => {
               
               <div className="space-y-4 text-white/70 leading-relaxed">
                 <p>
-                  Passionné par le développement depuis plus de 3 ans, je me spécialise 
+                  Passionné par le développement depuis plus de 5 ans, je me spécialise 
                   dans la création d'applications web robustes et performantes avec 
                   l'écosystème <span className="text-primary-400">Java/Spring Boot</span>.
                 </p>
                 <p>
                   Mon expertise s'étend également au frontend moderne avec 
-                  <span className="text-primary-400"> React</span> et 
-                  <span className="text-primary-400"> Angular</span>, me permettant de 
+                  <span className="text-primary-400"> React</span>, 
+                  <span className="text-primary-400"> TypeScript</span> et 
+                  <span className="text-primary-400"> Tailwind CSS</span>, me permettant de 
                   livrer des solutions complètes de bout en bout.
                 </p>
                 <p>

@@ -11,12 +11,12 @@ const skillCategories = [
     color: '#61DAFB',
     skills: [
       { name: 'React', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg' },
-      { name: 'Angular', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/angular/angular-original.svg' },
       { name: 'JavaScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg' },
       { name: 'TypeScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg' },
+      { name: 'Tailwind CSS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg' },
+      { name: 'Vite', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vite/vite-original.svg' },
       { name: 'HTML5', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg' },
       { name: 'CSS3', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg' },
-      { name: 'Tailwind', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg' },
     ]
   },
   {
@@ -25,10 +25,11 @@ const skillCategories = [
     color: '#68BD45',
     skills: [
       { name: 'Java', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg' },
-      { name: 'Spring', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original.svg' },
-      { name: 'Python', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg' },
-      { name: 'Node.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg' },
-      { name: 'PHP', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg' },
+      { name: 'Spring Boot', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original.svg' },
+      { name: 'Spring Security', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original.svg' },
+      { name: 'Micronaut', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg' },
+      { name: 'Maven', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/maven/maven-original.svg' },
+      { name: 'REST API', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-icon.svg' },
     ]
   },
   {
@@ -36,10 +37,10 @@ const skillCategories = [
     name: 'Databases',
     color: '#336791',
     skills: [
-      { name: 'PostgreSQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg' },
-      { name: 'MySQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg' },
-      { name: 'MongoDB', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg' },
-      { name: 'Redis', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redis/redis-original.svg' },
+      { name: 'JPA', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/hibernate/hibernate-original.svg' },
+      { name: 'Hibernate', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/hibernate/hibernate-original.svg' },
+      { name: 'H2', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlite/sqlite-original.svg' },
+      { name: 'SQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg' },
     ]
   },
   {
@@ -47,37 +48,38 @@ const skillCategories = [
     name: 'Tools & DevOps',
     color: '#2496ED',
     skills: [
-      { name: 'Docker', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg' },
       { name: 'Git', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg' },
       { name: 'GitHub', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg' },
-      { name: 'Linux', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg' },
+      { name: 'JGit', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg' },
+      { name: 'Framer Motion', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg' },
       { name: 'VS Code', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg' },
     ]
   }
 ]
 
 const skillBlurbs = {
-  React: 'Composants, hooks et écosystème moderne pour des interfaces réactives.',
-  Angular: 'Applications structurées, RxJS et bonnes pratiques enterprise.',
-  JavaScript: 'Base solide pour tout le front et l’écosystème web.',
-  TypeScript: 'Typage pour fiabiliser le code à grande échelle.',
-  HTML5: 'Sémantique et accessibilité au cœur du markup.',
-  CSS3: 'Layouts, animations et design systems maintenables.',
-  Tailwind: 'Rapidité de prototypage avec une cohérence visuelle forte.',
-  Java: 'Backend robuste, orienté objet et écosystème mature.',
-  Spring: 'API REST, sécurité et intégration dans le monde Java.',
-  Python: 'Scripts, automation et services légers quand c’est le bon outil.',
-  'Node.js': 'Services JavaScript côté serveur et intégration front/back.',
-  PHP: 'Legacy et apps web classiques quand le contexte l’exige.',
-  PostgreSQL: 'Données relationnelles, requêtes avancées et intégrité.',
-  MySQL: 'Bases classiques pour apps web et reporting.',
-  MongoDB: 'Documents et flexibilité pour certains cas d’usage.',
-  Redis: 'Cache, sessions et perf là où la latence compte.',
-  Docker: 'Environnements reproductibles et déploiements isolés.',
-  Git: 'Versioning, branches et collaboration au quotidien.',
-  GitHub: 'CI, revues et hébergement de code.',
-  Linux: 'Serveurs, scripts et confort en ligne de commande.',
-  'VS Code': 'IDE léger, extensions et productivité.',
+  React: 'Composants, hooks et routing — frontend BooqIn (React 19) et ce portfolio (React 18).',
+  JavaScript: 'Langage du portfolio et logique front sur mes projets web.',
+  TypeScript: 'Frontend typé sur BooqIn et l’interface web de GitClout.',
+  'Tailwind CSS': 'Styling utilitaire — Tailwind 3 sur ce portfolio, Tailwind 4 sur BooqIn.',
+  Vite: 'Build tool utilisé sur ce portfolio et le frontend BooqIn.',
+  HTML5: 'Structure sémantique et bases accessibles sur tous mes fronts.',
+  CSS3: 'Mise en page, animations et responsive design.',
+  Java: 'Langage principal — Java 21 sur BooqIn et GitClout.',
+  'Spring Boot': 'API REST, validation et JPA sur BooqIn (Spring Boot 3.4).',
+  'Spring Security': 'Authentification JWT et sécurisation des endpoints BooqIn.',
+  Micronaut: 'Framework backend sur GitClout — HTTP Netty, JPA et OpenAPI.',
+  Maven: 'Build, packaging et exécution des projets Java (BooqIn, GitClout).',
+  'REST API': 'Conception d’APIs REST et consommation côté React (Axios).',
+  JPA: 'Persistence des entités avec Spring Data JPA (BooqIn) et Micronaut Data (GitClout).',
+  Hibernate: 'ORM sous-jacent à JPA pour le mapping objet-relationnel.',
+  H2: 'Base embarquée en dev sur BooqIn et GitClout.',
+  SQL: 'Modélisation, requêtes et administration — alternance admin BDD.',
+  Git: 'Versioning, branches et collaboration sur tous mes dépôts.',
+  GitHub: 'Hébergement open source — daren046/BooqIn, Gitclout, Portfolio.',
+  JGit: 'Analyse et manipulation de dépôts Git dans le projet GitClout.',
+  'Framer Motion': 'Animations et transitions sur ce portfolio.',
+  'VS Code': 'IDE principal au quotidien.',
 }
 
 function blurbFor(name) {
@@ -254,8 +256,7 @@ function DeckBlock({ category, inView, reduceMotion, catIndex, showCategoryLabel
                 >
                   <p className="text-xs font-mono text-primary-400 tracking-widest mb-2">DÉTAILS</p>
                   <p className="text-white/80 text-sm sm:text-base leading-relaxed">
-                    J’utilise <span className="text-white font-medium">{skill.name}</span> dans mes livraisons : prototypes, features
-                    métier et mise en production. La stack complète (front, API, données) est documentée dans la section projets.
+                    {blurbFor(skill.name)}
                   </p>
                 </motion.div>
               </AnimatePresence>
@@ -364,10 +365,8 @@ const Skills = () => {
             <button
               type="button"
               onClick={() => setActiveCategory('all')}
-              className={`rounded-full px-6 py-2 font-mono text-sm tracking-wider transition-all duration-300 ${
-                activeCategory === 'all'
-                  ? 'bg-gradient-to-r from-primary-500 to-purple-600 text-white shadow-lg shadow-primary-500/25 ring-1 ring-white/10'
-                  : 'border border-white/[0.12] text-white/70 hover:border-primary-400/40 hover:text-primary-400'
+                className={`rounded-full px-6 py-2 font-mono text-sm tracking-wider transition-all duration-300 ${
+                activeCategory === 'all' ? 'btn-filter-active' : 'btn-filter-inactive'
               }`}
             >
               ALL
@@ -378,9 +377,7 @@ const Skills = () => {
                 type="button"
                 onClick={() => setActiveCategory(cat.id)}
                 className={`rounded-full px-6 py-2 font-mono text-sm tracking-wider transition-all duration-300 ${
-                  activeCategory === cat.id
-                    ? 'bg-gradient-to-r from-primary-500 to-purple-600 text-white shadow-lg shadow-primary-500/25 ring-1 ring-white/10'
-                    : 'border border-white/[0.12] text-white/70 hover:border-primary-400/40 hover:text-primary-400'
+                  activeCategory === cat.id ? 'btn-filter-active' : 'btn-filter-inactive'
                 }`}
               >
                 {cat.name.toUpperCase()}

@@ -23,7 +23,7 @@ const LoadingScreen = () => {
       className="fixed inset-0 z-[60] flex flex-col items-center justify-center overflow-hidden bg-[#050508]"
     >
       <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_40%,rgba(99,102,241,0.12),transparent_65%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_40%,rgba(255,255,255,0.06),transparent_65%)]"
         aria-hidden
       />
       <div
@@ -55,7 +55,7 @@ const LoadingScreen = () => {
         <div className="mx-auto h-px max-w-md bg-gradient-to-r from-transparent via-white/20 to-transparent" />
         <div className="mx-auto mt-4 h-[3px] max-w-xs overflow-hidden rounded-full bg-white/[0.08]">
           <motion.div
-            className="h-full rounded-full bg-gradient-to-r from-primary-500 to-purple-500"
+            className="h-full rounded-full bg-white"
             initial={{ width: '0%' }}
             animate={{ width: `${progress}%` }}
             transition={{ duration: 0.12 }}

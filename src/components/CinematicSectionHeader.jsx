@@ -53,9 +53,9 @@ export default function CinematicSectionHeader({
       >
         <div className="h-px flex-1 max-w-[min(180px,28vw)] bg-gradient-to-r from-transparent via-white/25 to-white/10" />
         <div className="flex items-center gap-2">
-          <div className="h-1 w-1 rounded-full bg-primary-400/90 shadow-[0_0_12px_rgba(99,102,241,0.7)]" />
-          <div className="h-[2px] w-16 rounded-full bg-gradient-to-r from-primary-500/80 to-purple-500/60" />
-          <div className="h-1 w-1 rounded-full bg-purple-400/80 shadow-[0_0_12px_rgba(168,85,247,0.5)]" />
+          <div className="h-1 w-1 rounded-full bg-primary-400/90 shadow-[0_0_12px_rgba(56,189,248,0.5)]" />
+          <div className="h-[2px] w-16 rounded-full bg-gradient-to-r from-primary-500/80 to-purple-500/50" />
+          <div className="h-1 w-1 rounded-full bg-purple-400/70 shadow-[0_0_12px_rgba(168,85,247,0.35)]" />
         </div>
         <div className="h-px flex-1 max-w-[min(180px,28vw)] bg-gradient-to-l from-transparent via-white/25 to-white/10" />
       </motion.div>

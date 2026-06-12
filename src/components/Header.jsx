@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Menu, X, Mail } from 'lucide-react'
+import profilePic from '../assets/pfp.jpg'
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -79,8 +80,12 @@ const Header = () => {
               whileHover={{ scale: 1.02 }}
               className="flex items-center gap-3 group shrink-0"
             >
-              <div className="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-primary-400 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-primary-500/20 ring-1 ring-white/10">
-                <span className="text-white font-bold text-sm sm:text-base tracking-tight">DT</span>
+              <div className="h-9 w-9 shrink-0 overflow-hidden rounded-xl border border-primary-400/30 ring-1 ring-primary-400/20 sm:h-10 sm:w-10">
+                <img
+                  src={profilePic}
+                  alt="Daren Tagnan"
+                  className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
+                />
               </div>
               <span className="hidden sm:flex flex-col leading-tight">
                 <span className="text-[15px] font-semibold text-white tracking-wide font-mono">
@@ -111,7 +116,7 @@ const Header = () => {
                   {activeSection === item.id && (
                     <motion.div
                       layoutId="activeNav"
-                      className="absolute inset-0 rounded-lg bg-[rgba(99,102,241,0.12)] border border-primary-400/35 shadow-[0_0_20px_rgba(99,102,241,0.15)]"
+                      className="absolute inset-0 rounded-lg border border-primary-400/30 bg-primary-500/10 shadow-[0_0_16px_rgba(14,165,233,0.12)]"
                       transition={{ type: 'spring', bounce: 0.15, duration: 0.45 }}
                     />
                   )}
@@ -129,7 +134,7 @@ const Header = () => {
               onClick={() => scrollToSection('#contact')}
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
-              className="hidden md:flex items-center gap-2 shrink-0 rounded-xl bg-gradient-to-r from-primary-500 to-purple-600 px-4 py-2 text-xs font-mono font-semibold tracking-wider text-white shadow-lg shadow-primary-500/30 ring-1 ring-white/10 transition-transform hover:shadow-primary-500/40"
+              className="btn-primary hidden md:flex items-center gap-2 shrink-0 !px-4 !py-2 text-xs"
             >
               <Mail className="w-4 h-4 opacity-90" strokeWidth={2} />
               <span>CONTACT</span>
@@ -140,7 +145,7 @@ const Header = () => {
               type="button"
               whileTap={{ scale: 0.95 }}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 text-white hover:text-primary-400 transition-colors rounded-xl hover:bg-white/10"
+              className="md:hidden p-2 text-white hover:text-white/80 transition-colors rounded-xl hover:bg-white/10"
               aria-expanded={isMobileMenuOpen}
               aria-label={isMobileMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
             >
@@ -176,7 +181,7 @@ const Header = () => {
               <button
                 type="button"
                 onClick={() => scrollToSection('#contact')}
-                className="w-full mt-3 flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary-500 to-purple-600 px-6 py-3 font-mono text-sm font-semibold tracking-wider text-white shadow-lg shadow-primary-500/25"
+                className="btn-primary w-full mt-3 flex items-center justify-center gap-2 !py-3 text-sm"
               >
                 <Mail className="w-4 h-4" />
                 CONTACT

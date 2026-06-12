@@ -93,11 +93,9 @@ const Hero = () => {
 
   return (
     <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">
-      {/* Background Effects */}
       <div className="absolute inset-0">
-        {/* Vignette + glow d'ambiance (lovable, moins "dur") */}
         <div
-          className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_50%_20%,rgba(99,102,241,0.18),transparent_55%),radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.9)_100%)]"
+          className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_50%_20%,rgba(14,165,233,0.14),transparent_55%),radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.9)_100%)]"
         />
         {/* Animated Grid */}
         <motion.div
@@ -122,7 +120,7 @@ const Hero = () => {
                 delay: i * 0.5,
                 ease: "easeInOut"
               }}
-              className="absolute w-px h-full bg-primary-400"
+              className="absolute w-px h-full bg-primary-400/30"
               style={{ left: `${i * 10}%` }}
             />
           ))}
@@ -140,7 +138,7 @@ const Hero = () => {
                 delay: i * 0.8,
                 ease: "easeInOut"
               }}
-              className="absolute h-px w-full bg-primary-400"
+              className="absolute h-px w-full bg-primary-400/20"
               style={{ top: `${i * 16.66}%` }}
             />
           ))}
@@ -308,7 +306,7 @@ const Hero = () => {
                 initial={{ x: "-100%" }}
                 whileHover={{ x: "0%" }}
                 transition={{ duration: 0.3 }}
-                className="absolute inset-0 bg-gradient-to-r from-primary-400 to-primary-600"
+                className="absolute inset-0 bg-white"
               />
               <span className="relative z-10 flex items-center gap-2">
                 VIEW PROJECTS
@@ -325,13 +323,13 @@ const Hero = () => {
             <a href="/CV_DAREN_TAGNAN_FR.pdf" download="CV_Daren_Tagnan.pdf">
               <MagneticButton
                 strength={0.4}
-                className="group relative rounded-xl border-2 border-primary-400 text-primary-400 transition-all duration-500 hover:bg-primary-400 hover:text-black px-8 py-4 font-mono tracking-wider ring-1 ring-primary-400/20"
+                className="group relative rounded-xl border-2 border-white/40 text-white transition-all duration-500 hover:border-white hover:bg-white hover:text-black px-8 py-4 font-mono tracking-wider ring-1 ring-white/10"
               >
                 <motion.div
                   initial={{ scale: 0, opacity: 0 }}
                   whileHover={{ scale: 1, opacity: 1 }}
                   transition={{ duration: 0.4 }}
-                  className="absolute inset-0 bg-primary-400"
+                  className="absolute inset-0 bg-white"
                 />
                 <span className="relative z-10 flex items-center gap-2">
                   DOWNLOAD CV
@@ -354,7 +352,7 @@ const Hero = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
           onClick={scrollToNext}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white hover:text-primary-400 transition-colors duration-300"
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white/70 hover:text-white transition-colors duration-300"
           aria-label="Faire défiler vers le bas"
         >
           <motion.div

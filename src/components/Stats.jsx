@@ -28,30 +28,30 @@ const Stats = () => {
   const stats = [
     {
       icon: Briefcase,
-      value: '3',
+      value: '5',
       suffix: '+',
       label: "Années d'expérience",
       color: '#6366F1'
     },
     {
       icon: Code,
-      value: '15',
-      suffix: '+',
-      label: 'Technologies maîtrisées',
+      value: '22',
+      suffix: '',
+      label: 'Technologies (stack réelle)',
       color: '#8B5CF6'
     },
     {
       icon: Award,
-      value: '10',
-      suffix: '+',
-      label: 'Projets réalisés',
+      value: '3',
+      suffix: '',
+      label: 'Projets sur GitHub',
       color: '#EC4899'
     },
     {
       icon: Coffee,
-      value: '1000',
-      suffix: '+',
-      label: 'Cafés consommés',
+      value: '2',
+      suffix: '',
+      label: 'Alternances réalisées',
       color: '#F59E0B'
     }
   ]

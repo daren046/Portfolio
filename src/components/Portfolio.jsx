@@ -1,9 +1,79 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { ExternalLink, Github, Eye, Filter } from 'lucide-react'
-import Card3D from './Card3D'
+import { ExternalLink, Github, BookOpen } from 'lucide-react'
 import CinematicSectionHeader from './CinematicSectionHeader'
+import ProjectCaseStudyModal from './ProjectCaseStudyModal'
+import { GITHUB_USERNAME, buildProjectFromRepo, categoryFallbackImages, GRID_SIZES, sortProjects } from '../data/projects'
+
+function ProjectActions({ project, onOpenCaseStudy, compact = false }) {
+  const btnClass = compact
+    ? 'flex h-10 w-10 items-center justify-center rounded-xl border border-white/80 text-white transition-all duration-150 hover:bg-white hover:text-black'
+    : 'inline-flex items-center gap-2 rounded-xl border border-white/25 px-4 py-2 font-mono text-xs tracking-wider text-white transition-all hover:border-primary-400/50 hover:bg-primary-500/10 hover:text-primary-200'
+
+  return (
+    <div className={`flex ${compact ? 'justify-center gap-3' : 'flex-wrap justify-center gap-2'}`}>
+      {project.liveUrl && (
+        <motion.a
+          href={project.liveUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className={btnClass}
+          title="Voir le projet en live"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {compact ? <ExternalLink className="w-4 h-4" /> : (
+            <>
+              <ExternalLink className="w-3.5 h-3.5" />
+              Live
+            </>
+          )}
+        </motion.a>
+      )}
+      {project.caseStudy && (
+        <motion.button
+          type="button"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className={compact ? btnClass : `${btnClass} border-primary-400/40 bg-primary-500/10`}
+          title="Lire la case study"
+          onClick={(e) => {
+            e.stopPropagation()
+            onOpenCaseStudy(project)
+          }}
+        >
+          {compact ? <BookOpen className="w-4 h-4" /> : (
+            <>
+              <BookOpen className="w-3.5 h-3.5" />
+              Case study
+            </>
+          )}
+        </motion.button>
+      )}
+      {project.githubUrl && (
+        <motion.a
+          href={project.githubUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className={btnClass}
+          title="Voir sur GitHub"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {compact ? <Github className="w-4 h-4" /> : (
+            <>
+              <Github className="w-3.5 h-3.5" />
+              GitHub
+            </>
+          )}
+        </motion.a>
+      )}
+    </div>
+  )
+}
 
 const Portfolio = () => {
   const [ref, inView] = useInView({
@@ -12,88 +82,49 @@ const Portfolio = () => {
   })
 
   const [activeFilter, setActiveFilter] = useState('all')
+  const [projects, setProjects] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [caseStudyProject, setCaseStudyProject] = useState(null)
 
   const filters = [
     { id: 'all', label: 'ALL' },
     { id: 'web', label: 'WEB' },
-    { id: 'mobile', label: 'MOBILE' },
     { id: 'backend', label: 'BACKEND' },
-    { id: 'automation', label: 'AUTOMATION' },
     { id: 'academic', label: 'ACADEMIC' }
   ]
 
-  const projects = [
-    {
-      id: 1,
-      title: 'Portfolio Personnel',
-      category: 'web',
-      description: 'Ce portfolio moderne avec React, Tailwind CSS et Framer Motion. Design responsive et animations fluides.',
-      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop',
-      technologies: ['React', 'Tailwind CSS', 'Framer Motion', 'Vite'],
-      liveUrl: null,
-      githubUrl: 'https://github.com/daren046',
-      featured: true
-    },
-    {
-      id: 2,
-      title: 'Scripts d\'Automatisation',
-      category: 'automation',
-      description: 'Suite de scripts pour l\'automatisation de collecte de données et web scraping avec gestion d\'APIs.',
-      image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&h=400&fit=crop',
-      technologies: ['Python', 'JavaScript', 'Selenium', 'API REST'],
-      liveUrl: null,
-      githubUrl: 'https://github.com/daren046',
-      featured: true
-    },
-    {
-      id: 3,
-      title: 'Application Web FullStack',
-      category: 'web',
-      description: 'Application web complète développée chez Cash Flow Positif avec Laravel, React et TypeScript.',
-      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop',
-      technologies: ['React', 'TypeScript', 'Laravel', 'PostgreSQL'],
-      liveUrl: null,
-      githubUrl: null,
-      featured: true
-    },
-    {
-      id: 4,
-      title: 'API Backend Spring Boot',
-      category: 'backend',
-      description: 'API RESTful développée avec Spring Boot, sécurisée avec JWT et documentée avec Swagger.',
-      image: 'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=600&h=400&fit=crop',
-      technologies: ['Java', 'Spring Boot', 'PostgreSQL', 'Docker'],
-      liveUrl: null,
-      githubUrl: 'https://github.com/daren046',
-      featured: false
-    },
-    {
-      id: 5,
-      title: 'Dashboard Analytics',
-      category: 'web',
-      description: 'Tableau de bord interactif pour la visualisation de données avec graphiques dynamiques.',
-      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop',
-      technologies: ['React', 'Chart.js', 'Tailwind', 'FastAPI'],
-      liveUrl: null,
-      githubUrl: 'https://github.com/daren046',
-      featured: false
-    },
-    {
-      id: 6,
-      title: 'Projets Universitaires',
-      category: 'academic',
-      description: 'Collection de projets réalisés durant mon Master : compilateurs, systèmes distribués, IA.',
-      image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&h=400&fit=crop',
-      technologies: ['Java', 'C++', 'Python', 'Git'],
-      liveUrl: null,
-      githubUrl: 'https://github.com/daren046',
-      featured: false
-    }
-  ]
+  useEffect(() => {
+    let cancelled = false
 
-  const filteredProjects = activeFilter === 'all' 
-    ? projects 
-    : projects.filter(project => project.category === activeFilter)
+    async function loadProjects() {
+      try {
+        const response = await fetch(
+          `https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=30`
+        )
+        if (!response.ok) throw new Error('GitHub API indisponible')
+
+        const repos = await response.json()
+        const publicRepos = sortProjects(
+          repos
+            .filter((repo) => !repo.fork && !repo.private)
+            .map(buildProjectFromRepo)
+        )
+
+        if (!cancelled) setProjects(publicRepos)
+      } catch {
+        if (!cancelled) setProjects([])
+      } finally {
+        if (!cancelled) setLoading(false)
+      }
+    }
+
+    loadProjects()
+    return () => { cancelled = true }
+  }, [])
+
+  const filteredProjects = activeFilter === 'all'
+    ? projects
+    : projects.filter((project) => project.category === activeFilter)
 
   return (
     <section id="portfolio" className="relative overflow-hidden py-20 border-t border-white/[0.08]">
@@ -109,11 +140,10 @@ const Portfolio = () => {
           <CinematicSectionHeader
             eyebrow="Sélection"
             title={<span className="text-white">PROJECTS</span>}
-            subtitle="Aperçu de projets récents — web, backend, automation et travaux académiques."
+            subtitle="Projets open source — demos live, code GitHub et case studies."
             inView={inView}
           />
 
-          {/* Filter Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -127,133 +157,99 @@ const Portfolio = () => {
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setActiveFilter(filter.id)}
-                className={`rounded-full px-5 py-2 text-xs font-mono tracking-wider transition-all duration-300 ${
-                  activeFilter === filter.id
-                    ? 'border border-primary-400/40 bg-gradient-to-r from-primary-500/90 to-purple-600/90 text-white shadow-lg shadow-primary-500/25 ring-1 ring-white/10'
-                    : 'border border-white/[0.12] text-white/70 hover:border-primary-400/40 hover:text-primary-400'
-                }`}
+                className={activeFilter === filter.id ? 'btn-filter-active' : 'btn-filter-inactive'}
               >
                 {filter.label}
               </motion.button>
             ))}
           </motion.div>
 
-          {/* Projects Mosaic Grid */}
-          <motion.div
-            layout
-            className="grid grid-cols-12 gap-4 auto-rows-[200px]"
-          >
-            <AnimatePresence>
+          {loading && (
+            <p className="text-center text-white/50 font-mono text-sm mb-8">Chargement des projets GitHub…</p>
+          )}
+
+          {!loading && filteredProjects.length === 0 && (
+            <p className="text-center text-white/50 font-mono text-sm mb-8">Aucun projet dans cette catégorie.</p>
+          )}
+
+          <div className="grid grid-cols-12 gap-4 auto-rows-[220px] md:auto-rows-[240px]">
+            <AnimatePresence mode="popLayout" initial={false}>
               {filteredProjects.map((project, index) => {
-                // Définir différentes tailles pour créer un effet mosaïque
-                const sizes = [
-                  'col-span-12 md:col-span-8 row-span-2', // Large horizontal
-                  'col-span-12 md:col-span-4 row-span-1', // Small
-                  'col-span-12 md:col-span-6 row-span-1', // Medium
-                  'col-span-12 md:col-span-4 row-span-2', // Tall
-                  'col-span-12 md:col-span-8 row-span-1', // Wide
-                  'col-span-12 md:col-span-6 row-span-2', // Medium tall
-                ]
-                const sizeClass = sizes[index % sizes.length]
-                
+                const sizeClass = GRID_SIZES[project.gridSize] ?? GRID_SIZES.medium
+                const isLargeTile = project.gridSize === 'large' || project.gridSize === 'tall'
+
                 return (
                   <motion.div
                     key={project.id}
-                    layout
-                    initial={{ opacity: 0, scale: 0.9 }}
+                    initial={{ opacity: 0, scale: 0.96 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{ 
-                      duration: 0.3,
-                      delay: index * 0.05
+                    exit={{ opacity: 0, scale: 0.96 }}
+                    transition={{
+                      duration: 0.15,
+                      delay: index * 0.02,
+                      ease: [0.22, 1, 0.36, 1],
                     }}
                     className={`${sizeClass}`}
                   >
-                    <Card3D
-                      intensity={0.45}
-                      glowColor="rgba(99, 102, 241, 0.28)"
-                      className="group relative h-full cursor-pointer overflow-hidden rounded-2xl border border-white/[0.08] bg-black/20 shadow-[0_12px_40px_rgba(0,0,0,0.35)]"
-                      onHoverStart={() => {
-                        if (navigator.vibrate) navigator.vibrate(40)
-                      }}
-                    >
-                    {/* Project Image */}
+                    <div className="group relative h-full cursor-pointer overflow-hidden rounded-2xl border border-white/[0.08] bg-black/20 shadow-[0_12px_40px_rgba(0,0,0,0.35)]">
                     <div className="relative h-full w-full overflow-hidden rounded-2xl">
                       <img
                         src={project.image}
                         alt={project.title}
-                        className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-300"
+                        className="absolute inset-0 h-full w-full object-cover object-center filter grayscale transition-[filter] duration-150 ease-out group-hover:grayscale-0"
+                        style={{ objectPosition: project.imagePosition ?? 'center center' }}
+                        onError={(e) => {
+                          e.currentTarget.src = categoryFallbackImages[project.category] ?? categoryFallbackImages.web
+                        }}
                       />
-                      
-                      {/* Scan Line Effect */}
-                      <motion.div
-                        initial={{ y: "-100%" }}
-                        whileHover={{ y: "100%" }}
-                        transition={{ duration: 0.5, ease: "easeInOut" }}
-                        className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary-400 to-transparent opacity-0 group-hover:opacity-100"
-                      />
-                      
-                      {/* Overlay */}
-                      <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center p-4">
-                        <div className="text-center">
-                          <h3 className="text-white font-mono tracking-wider text-lg mb-2">
+
+                      <div className="absolute inset-0 flex items-center justify-center overflow-y-auto bg-black/85 p-3 opacity-0 transition-opacity duration-150 group-hover:opacity-100 sm:p-5">
+                        <div
+                          className={`w-full rounded-2xl border border-white/15 bg-black/95 px-5 py-6 text-center shadow-2xl backdrop-blur-md sm:px-7 sm:py-8 ${
+                            isLargeTile ? 'max-w-2xl' : 'max-w-md'
+                          }`}
+                        >
+                          <h3 className="mb-3 font-mono text-xl tracking-wider text-white sm:text-2xl">
                             {project.title}
                           </h3>
-                          <p className="text-white/70 text-sm font-mono mb-4 line-clamp-2">
-                            {project.description}
+                          <p className="mx-auto mb-4 font-mono text-sm leading-relaxed text-white/75 sm:text-base">
+                            {project.shortDescription ?? project.description}
                           </p>
-                          <div className="flex space-x-3 justify-center">
-                            {project.liveUrl && (
-                              <motion.a
-                                href={project.liveUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.9 }}
-                                className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/80 text-white transition-all duration-150 hover:bg-white hover:text-black"
-                                title="Voir le projet"
-                              >
-                                <ExternalLink className="w-4 h-4" />
-                              </motion.a>
-                            )}
-                            {project.githubUrl && (
-                              <motion.a
-                                href={project.githubUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.9 }}
-                                className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/80 text-white transition-all duration-150 hover:bg-white hover:text-black"
-                                title="Voir sur GitHub"
-                              >
-                                <Github className="w-4 h-4" />
-                              </motion.a>
-                            )}
-                            {!project.liveUrl && !project.githubUrl && (
-                              <span className="text-white/50 text-xs font-mono">Projet privé</span>
-                            )}
-                          </div>
+                          {project.technologies.length > 0 && (
+                            <div className="mb-5 flex flex-wrap justify-center gap-2">
+                              {project.technologies.map((tech) => (
+                                <span
+                                  key={tech}
+                                  className="rounded-full border border-white/20 px-2.5 py-1 font-mono text-[11px] text-white/70"
+                                >
+                                  {tech}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                          <ProjectActions
+                            project={project}
+                            onOpenCaseStudy={setCaseStudyProject}
+                            compact={!isLargeTile}
+                          />
                         </div>
                       </div>
 
-                      {/* Project Number */}
-                      <div className="absolute top-4 left-4 text-white font-mono text-sm tracking-wider">
+                      <div className="absolute top-4 left-4 font-mono text-sm tracking-wider text-white">
                         {String(index + 1).padStart(2, '0')}
                       </div>
 
-                      {/* Featured Indicator */}
                       {project.featured && (
-                        <div className="absolute top-4 right-4 w-2 h-2 bg-primary-400"></div>
+                        <div className="absolute top-4 right-4 h-2 w-2 rounded-full bg-primary-400" />
                       )}
                     </div>
-                    </Card3D>
+                    </div>
                   </motion.div>
                 )
               })}
             </AnimatePresence>
-          </motion.div>
+          </div>
 
-          {/* View More Button */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -261,7 +257,7 @@ const Portfolio = () => {
             className="text-center mt-12"
           >
             <motion.a
-              href="https://github.com/daren046"
+              href={`https://github.com/${GITHUB_USERNAME}`}
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
@@ -274,6 +270,11 @@ const Portfolio = () => {
           </motion.div>
         </motion.div>
       </div>
+
+      <ProjectCaseStudyModal
+        project={caseStudyProject}
+        onClose={() => setCaseStudyProject(null)}
+      />
     </section>
   )
 }

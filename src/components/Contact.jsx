@@ -1,8 +1,11 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { Mail, Phone, MapPin, Send, Github, Linkedin } from 'lucide-react'
+import { Mail, Phone, MapPin, Send, Github, Linkedin, CheckCircle, AlertCircle } from 'lucide-react'
 import CinematicSectionHeader from './CinematicSectionHeader'
+import { sendContactEmail } from '../utils/sendContactEmail'
+
+const CONTACT_EMAIL = 'tagnandaren@gmail.com'
 
 const Contact = () => {
   const [ref, inView] = useInView({
@@ -18,8 +21,10 @@ const Contact = () => {
   })
 
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState(null)
 
   const handleInputChange = (e) => {
+    setSubmitStatus(null)
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -29,13 +34,23 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setIsSubmitting(true)
-    
-    // Simulation d'envoi
-    setTimeout(() => {
-      setIsSubmitting(false)
+    setSubmitStatus(null)
+
+    try {
+      await sendContactEmail(formData)
+      setSubmitStatus({
+        type: 'success',
+        message: 'Message envoyé avec succès ! Je vous répondrai rapidement.',
+      })
       setFormData({ name: '', email: '', subject: '', message: '' })
-      alert('Message envoyé avec succès !')
-    }, 2000)
+    } catch {
+      setSubmitStatus({
+        type: 'error',
+        message: `Impossible d'envoyer le message. Écrivez-moi directement à ${CONTACT_EMAIL} ou réessayez dans quelques instants.`,
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const contactInfo = [
@@ -251,6 +266,25 @@ const Contact = () => {
                     placeholder="Décrivez votre projet ou votre besoin…"
                   />
                 </motion.div>
+
+                {submitStatus && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className={`flex items-start gap-3 rounded-xl border p-4 text-sm ${
+                      submitStatus.type === 'success'
+                        ? 'border-green-500/30 bg-green-500/10 text-green-300'
+                        : 'border-red-500/30 bg-red-500/10 text-red-300'
+                    }`}
+                  >
+                    {submitStatus.type === 'success' ? (
+                      <CheckCircle className="h-5 w-5 shrink-0 mt-0.5" />
+                    ) : (
+                      <AlertCircle className="h-5 w-5 shrink-0 mt-0.5" />
+                    )}
+                    <span>{submitStatus.message}</span>
+                  </motion.div>
+                )}
 
                 <motion.button
                   type="submit"

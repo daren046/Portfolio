@@ -10,6 +10,7 @@ import Portfolio from './components/Portfolio'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import LoadingScreen from './components/LoadingScreen'
+import SectionMarquee from './components/effects/SectionMarquee'
 import EnhancedEffects from './components/EnhancedEffects'
 
 function App() {
@@ -36,12 +37,13 @@ function App() {
         className="min-h-screen bg-black relative"
       >
         {/* Effets visuels globaux */}
-        <EnhancedEffects />
+        <EnhancedEffects enabled={!isLoading} />
         
         <Header />
         <main>
           <Hero />
           <About />
+          <SectionMarquee />
           <Skills />
           <Stats />
           <Portfolio />
