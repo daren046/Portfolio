@@ -6,6 +6,7 @@ import { useLanguage } from '../i18n/LanguageContext'
 
 const Hero = () => {
   const { t } = useLanguage()
+  const highlightWord = t('hero.highlightWord')
   const [displayedText, setDisplayedText] = useState('')
   const [showCursor, setShowCursor] = useState(true)
   const fullName = "DAREN TAGNAN"
@@ -259,7 +260,9 @@ const Hero = () => {
             className="text-xl md:text-2xl text-white mb-12 font-mono tracking-widest"
             style={{ perspective: '900px' }}
           >
-            <span className="text-white">{t('hero.rolePrefix')}</span>{' '}
+            {t('hero.rolePrefix') && (
+              <span className="text-white">{t('hero.rolePrefix')} </span>
+            )}
             <motion.span
               className="relative inline-block"
               style={{ transformStyle: 'preserve-3d' }}
@@ -272,20 +275,22 @@ const Hero = () => {
               <span
                 className="absolute left-0 top-0 text-primary-400/25 blur-[0.2px]"
                 style={{ transform: 'translate3d(2px, 2px, -14px)' }}
+                aria-hidden
               >
-                JAVA
+                {highlightWord}
               </span>
               <span
                 className="absolute left-0 top-0 text-primary-400/15"
                 style={{ transform: 'translate3d(4px, 4px, -26px)' }}
+                aria-hidden
               >
-                JAVA
+                {highlightWord}
               </span>
               <span
                 className="relative text-white text-shadow-glow"
                 style={{ transform: reduceMotion ? 'translateZ(0px)' : 'translateZ(10px)' }}
               >
-                JAVA
+                {highlightWord}
               </span>
             </motion.span>{' '}
             <span className="text-white">{t('hero.roleSuffix')}</span>

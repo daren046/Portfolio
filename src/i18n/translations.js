@@ -18,6 +18,7 @@ export const translations = {
     },
     hero: {
       rolePrefix: 'DÉVELOPPEUR',
+      highlightWord: 'JAVA',
       roleSuffix: 'FULLSTACK',
       viewProjects: 'VOIR LES PROJETS',
       downloadCv: 'TÉLÉCHARGER CV',
@@ -244,7 +245,8 @@ export const translations = {
       status: 'LOADING',
     },
     hero: {
-      rolePrefix: 'JAVA',
+      rolePrefix: '',
+      highlightWord: 'JAVA',
       roleSuffix: 'FULLSTACK DEVELOPER',
       viewProjects: 'VIEW PROJECTS',
       downloadCv: 'DOWNLOAD CV',
