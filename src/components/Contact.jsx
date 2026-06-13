@@ -4,10 +4,12 @@ import { useInView } from 'react-intersection-observer'
 import { Mail, Phone, MapPin, Send, Github, Linkedin, CheckCircle, AlertCircle } from 'lucide-react'
 import CinematicSectionHeader from './CinematicSectionHeader'
 import { sendContactEmail } from '../utils/sendContactEmail'
+import { useLanguage } from '../i18n/LanguageContext'
 
 const CONTACT_EMAIL = 'tagnandaren@gmail.com'
 
 const Contact = () => {
+  const { t } = useLanguage()
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1
@@ -40,13 +42,13 @@ const Contact = () => {
       await sendContactEmail(formData)
       setSubmitStatus({
         type: 'success',
-        message: 'Message envoyé avec succès ! Je vous répondrai rapidement.',
+        message: t('contact.success'),
       })
       setFormData({ name: '', email: '', subject: '', message: '' })
     } catch {
       setSubmitStatus({
         type: 'error',
-        message: `Impossible d'envoyer le message. Écrivez-moi directement à ${CONTACT_EMAIL} ou réessayez dans quelques instants.`,
+        message: t('contact.error').replace('{email}', CONTACT_EMAIL),
       })
     } finally {
       setIsSubmitting(false)
@@ -54,24 +56,9 @@ const Contact = () => {
   }
 
   const contactInfo = [
-    {
-      icon: Mail,
-      label: 'Email',
-      value: 'tagnandaren@gmail.com',
-      href: 'mailto:tagnandaren@gmail.com'
-    },
-    {
-      icon: Phone,
-      label: 'Téléphone',
-      value: '+33 6 58 41 92 30',
-      href: 'tel:+33658419230'
-    },
-    {
-      icon: MapPin,
-      label: 'Localisation',
-      value: 'Île-de-France, France',
-      href: null
-    }
+    { icon: Mail, label: t('contact.email'), value: 'tagnandaren@gmail.com', href: 'mailto:tagnandaren@gmail.com' },
+    { icon: Phone, label: t('contact.phone'), value: '+33 6 58 41 92 30', href: 'tel:+33658419230' },
+    { icon: MapPin, label: t('contact.location'), value: t('contact.locationValue'), href: null },
   ]
 
   const socialLinks = [
@@ -91,9 +78,9 @@ const Contact = () => {
           className="max-w-6xl mx-auto"
         >
           <CinematicSectionHeader
-            eyebrow="Disponibilité"
-            title={<span className="text-white">CONTACT</span>}
-            subtitle="Un projet, une mission ou une simple question — écris-moi, je réponds vite."
+            eyebrow={t('contact.eyebrow')}
+            title={<span className="text-white">{t('contact.title')}</span>}
+            subtitle={t('contact.subtitle')}
             inView={inView}
           />
 
@@ -106,7 +93,7 @@ const Contact = () => {
               className="cine-surface flex flex-col p-6 sm:p-8"
             >
               <h3 className="mb-6 text-sm font-mono font-bold uppercase tracking-[0.25em] text-primary-400/90">
-                Contact direct
+                {t('contact.directTitle')}
               </h3>
 
               <div className="mb-8 space-y-4">
@@ -152,7 +139,7 @@ const Contact = () => {
               {/* Social Links */}
               <div className="mt-auto border-t border-white/[0.08] pt-6">
                 <h4 className="mb-4 text-sm font-mono font-bold uppercase tracking-[0.25em] text-white/45">
-                  Réseaux
+                  {t('contact.networks')}
                 </h4>
                 <div className="flex space-x-4">
                   {socialLinks.map((social, index) => (
@@ -182,7 +169,7 @@ const Contact = () => {
               className="cine-surface p-6 sm:p-8 lg:p-10"
             >
               <h3 className="text-sm font-mono font-bold tracking-[0.25em] text-primary-400/90 uppercase mb-6">
-                Envoyer un message
+                {t('contact.formTitle')}
               </h3>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
@@ -192,7 +179,7 @@ const Contact = () => {
                     transition={{ delay: 1 }}
                   >
                     <label htmlFor="name" className="block text-xs font-mono text-white/55 mb-2 tracking-wider uppercase">
-                      Nom
+                      {t('contact.name')}
                     </label>
                     <input
                       type="text"
@@ -202,7 +189,7 @@ const Contact = () => {
                       onChange={handleInputChange}
                       required
                       className="cine-input"
-                      placeholder="Votre nom"
+                      placeholder={t('contact.namePlaceholder')}
                     />
                   </motion.div>
 
@@ -212,7 +199,7 @@ const Contact = () => {
                     transition={{ delay: 1.1 }}
                   >
                     <label htmlFor="email" className="block text-xs font-mono text-white/55 mb-2 tracking-wider uppercase">
-                      Email
+                      {t('contact.emailLabel')}
                     </label>
                     <input
                       type="email"
@@ -222,7 +209,7 @@ const Contact = () => {
                       onChange={handleInputChange}
                       required
                       className="cine-input"
-                      placeholder="vous@email.com"
+                      placeholder={t('contact.emailPlaceholder')}
                     />
                   </motion.div>
                 </div>
@@ -233,7 +220,7 @@ const Contact = () => {
                   transition={{ delay: 1.2 }}
                 >
                   <label htmlFor="subject" className="block text-xs font-mono text-white/55 mb-2 tracking-wider uppercase">
-                    Sujet
+                    {t('contact.subject')}
                   </label>
                   <input
                     type="text"
@@ -243,7 +230,7 @@ const Contact = () => {
                     onChange={handleInputChange}
                     required
                     className="cine-input"
-                    placeholder="Sujet de votre message"
+                    placeholder={t('contact.subjectPlaceholder')}
                   />
                 </motion.div>
 
@@ -253,7 +240,7 @@ const Contact = () => {
                   transition={{ delay: 1.3 }}
                 >
                   <label htmlFor="message" className="block text-xs font-mono text-white/55 mb-2 tracking-wider uppercase">
-                    Message
+                    {t('contact.message')}
                   </label>
                   <textarea
                     id="message"
@@ -263,7 +250,7 @@ const Contact = () => {
                     required
                     rows={6}
                     className="cine-input resize-none min-h-[140px]"
-                    placeholder="Décrivez votre projet ou votre besoin…"
+                    placeholder={t('contact.messagePlaceholder')}
                   />
                 </motion.div>
 
@@ -299,12 +286,12 @@ const Contact = () => {
                   {isSubmitting ? (
                     <>
                       <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      <span>Envoi en cours...</span>
+                      <span>{t('contact.sending')}</span>
                     </>
                   ) : (
                     <>
                       <Send className="w-4 h-4" />
-                      <span>Envoyer le message</span>
+                      <span>{t('contact.send')}</span>
                     </>
                   )}
                 </motion.button>

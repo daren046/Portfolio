@@ -2,9 +2,10 @@ import { motion } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import { useState, useEffect, useRef } from 'react'
 import MagneticButton from './MagneticButton'
-// import TextMorph from './TextMorph'
+import { useLanguage } from '../i18n/LanguageContext'
 
 const Hero = () => {
+  const { t } = useLanguage()
   const [displayedText, setDisplayedText] = useState('')
   const [showCursor, setShowCursor] = useState(true)
   const fullName = "DAREN TAGNAN"
@@ -258,7 +259,7 @@ const Hero = () => {
             className="text-xl md:text-2xl text-white mb-12 font-mono tracking-widest"
             style={{ perspective: '900px' }}
           >
-            <span className="text-white">DÉVELOPPEUR</span>{' '}
+            <span className="text-white">{t('hero.rolePrefix')}</span>{' '}
             <motion.span
               className="relative inline-block"
               style={{ transformStyle: 'preserve-3d' }}
@@ -287,7 +288,7 @@ const Hero = () => {
                 JAVA
               </span>
             </motion.span>{' '}
-            <span className="text-white">FULLSTACK</span>
+            <span className="text-white">{t('hero.roleSuffix')}</span>
           </motion.h2>
 
           {/* CTA Buttons Magnétiques */}
@@ -309,7 +310,7 @@ const Hero = () => {
                 className="absolute inset-0 bg-white"
               />
               <span className="relative z-10 flex items-center gap-2">
-                VIEW PROJECTS
+                {t('hero.viewProjects')}
                 <motion.span
                   animate={{ x: [0, 4, 0] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
@@ -332,7 +333,7 @@ const Hero = () => {
                   className="absolute inset-0 bg-white"
                 />
                 <span className="relative z-10 flex items-center gap-2">
-                  DOWNLOAD CV
+                  {t('hero.downloadCv')}
                   <motion.span
                     whileHover={{ y: [0, -2, 0] }}
                     transition={{ duration: 0.6, repeat: Infinity }}
@@ -353,7 +354,7 @@ const Hero = () => {
           transition={{ delay: 0.8 }}
           onClick={scrollToNext}
           className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white/70 hover:text-white transition-colors duration-300"
-          aria-label="Faire défiler vers le bas"
+          aria-label={t('hero.scrollDown')}
         >
           <motion.div
             animate={{ y: [0, 10, 0] }}

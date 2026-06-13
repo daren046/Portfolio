@@ -3,8 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { Calendar, MapPin, Briefcase, GraduationCap, ChevronDown, Globe, Code } from 'lucide-react'
 import CinematicSectionHeader from './CinematicSectionHeader'
+import { useLanguage } from '../i18n/LanguageContext'
 
-const AccordionItem = ({ item, isOpen, onToggle, type, index }) => {
+const AccordionItem = ({ item, isOpen, onToggle, type, index, statusOngoingLabel }) => {
   const isWork = type === 'work'
 
   return (
@@ -89,7 +90,7 @@ const AccordionItem = ({ item, isOpen, onToggle, type, index }) => {
                   </span>
                   {!isWork && item.status && (
                     <span className={`px-2 py-0.5 rounded text-xs ${
-                      item.status === 'En cours' 
+                      item.status === statusOngoingLabel
                         ? 'bg-yellow-500/20 text-yellow-400' 
                         : 'bg-green-500/20 text-green-400'
                     }`}>
@@ -140,6 +141,9 @@ const AccordionItem = ({ item, isOpen, onToggle, type, index }) => {
 }
 
 const Experience = () => {
+  const { t, dict } = useLanguage()
+  const experiences = dict.experience.work
+  const formations = dict.experience.education
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1
@@ -150,67 +154,6 @@ const Experience = () => {
   const toggleItem = (id) => {
     setOpenItems(prev => ({ ...prev, [id]: !prev[id] }))
   }
-
-  const experiences = [
-    {
-      id: 'exp-1',
-      company: 'Cash Flow Positif',
-      position: 'Développeur FullStack',
-      period: 'Juin 2024 - Sept. 2025',
-      location: 'Montrouge',
-      contract: 'Alternance',
-      description: 'Développement d\'applications web complètes avec React, TypeScript et Laravel.',
-      responsibilities: [
-        'Conception et intégration de nouveaux modules',
-        'Développement d\'applications web de A à Z',
-        'Gestion des migrations avec Prisma ORM',
-        'Automatisation avec Python et JavaScript'
-      ],
-      technologies: ['React', 'TypeScript', 'Laravel', 'FastAPI', 'Prisma', 'Python'],
-    },
-    {
-      id: 'exp-2',
-      company: 'Vivendi',
-      position: 'Admin Base de Données',
-      period: 'Oct. 2022 - Fév. 2023',
-      location: 'Paris',
-      contract: 'Alternance',
-      description: 'Administration et gestion de bases de données, création de rapports.',
-      responsibilities: [
-        'Création et gestion de bases de données SQL',
-        'Génération de rapports et analyse',
-        'Support utilisateurs'
-      ],
-      technologies: ['SQL', 'Access', 'Excel'],
-    }
-  ]
-
-  const formations = [
-    {
-      id: 'edu-1',
-      school: 'Université Gustave Eiffel',
-      degree: 'Master Logiciel & Ingénierie des données',
-      period: '2022 - 2025',
-      location: 'Champs-sur-Marne',
-      status: 'Diplômé'
-    },
-    {
-      id: 'edu-2',
-      school: 'Université Gustave Eiffel',
-      degree: 'Licence Informatique',
-      period: '2020 - 2023',
-      location: 'Champs-sur-Marne',
-      status: 'Diplômé'
-    },
-    {
-      id: 'edu-3',
-      school: 'Lycée Gustave Eiffel',
-      degree: 'Baccalauréat Scientifique',
-      period: '2019 - 2020',
-      location: 'Gagny',
-      status: 'Diplômé'
-    }
-  ]
 
   return (
     <section id="experience" className="relative overflow-hidden py-20 border-t border-white/[0.08]">
@@ -224,13 +167,12 @@ const Experience = () => {
           className="max-w-3xl mx-auto"
         >
           <CinematicSectionHeader
-            eyebrow="Mon parcours"
-            title={<span className="text-white">EXPÉRIENCE</span>}
-            subtitle="Alternances, missions et formation — du terrain à l’école."
+            eyebrow={t('experience.eyebrow')}
+            title={<span className="text-white">{t('experience.title')}</span>}
+            subtitle={t('experience.subtitle')}
             inView={inView}
           />
 
-          {/* Expériences professionnelles */}
           <div className="mb-8">
             <motion.h3
               initial={{ opacity: 0, x: -20 }}
@@ -239,7 +181,7 @@ const Experience = () => {
               className="text-sm font-bold text-primary-400 font-mono tracking-wider mb-4 flex items-center gap-2"
             >
               <Briefcase className="w-4 h-4" />
-              EXPÉRIENCE PROFESSIONNELLE
+              {t('experience.workTitle')}
             </motion.h3>
 
             <div className="space-y-3">
@@ -251,12 +193,12 @@ const Experience = () => {
                   onToggle={() => toggleItem(exp.id)}
                   type="work"
                   index={index}
+                  statusOngoingLabel={t('experience.statusOngoing')}
                 />
               ))}
             </div>
           </div>
 
-          {/* Formations */}
           <div className="mb-8">
             <motion.h3
               initial={{ opacity: 0, x: -20 }}
@@ -265,7 +207,7 @@ const Experience = () => {
               className="mb-4 flex items-center gap-2 text-sm font-bold font-mono tracking-wider text-purple-300"
             >
               <GraduationCap className="h-4 w-4" />
-              FORMATIONS
+              {t('experience.educationTitle')}
             </motion.h3>
 
             <div className="space-y-3">
@@ -277,12 +219,12 @@ const Experience = () => {
                   onToggle={() => toggleItem(formation.id)}
                   type="education"
                   index={index}
+                  statusOngoingLabel={t('experience.statusOngoing')}
                 />
               ))}
             </div>
           </div>
 
-          {/* Langues & Intérêts - Compact */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -292,28 +234,27 @@ const Experience = () => {
             <div className="cine-surface p-4 sm:p-5">
               <h4 className="mb-3 flex items-center gap-2 font-mono text-sm font-bold text-white">
                 <Globe className="h-4 w-4 text-primary-400" />
-                LANGUES
+                {t('experience.languages')}
               </h4>
               <div className="flex flex-wrap gap-2">
-                <span className="rounded-lg border border-primary-500/25 bg-primary-500/10 px-3 py-1.5 font-mono text-xs text-primary-200">
-                  🇫🇷 Français
-                </span>
-                <span className="rounded-lg border border-primary-500/25 bg-primary-500/10 px-3 py-1.5 font-mono text-xs text-primary-200">
-                  🇬🇧 Anglais
-                </span>
-                <span className="rounded-lg border border-primary-500/25 bg-primary-500/10 px-3 py-1.5 font-mono text-xs text-primary-200">
-                  🇪🇸 Espagnol
-                </span>
+                {dict.experience.languageList.map((lang) => (
+                  <span
+                    key={lang}
+                    className="rounded-lg border border-primary-500/25 bg-primary-500/10 px-3 py-1.5 font-mono text-xs text-primary-200"
+                  >
+                    {lang}
+                  </span>
+                ))}
               </div>
             </div>
 
             <div className="cine-surface p-4 sm:p-5">
               <h4 className="mb-3 flex items-center gap-2 font-mono text-sm font-bold text-white">
                 <Code className="h-4 w-4 text-primary-400" />
-                INTÉRÊTS
+                {t('experience.interests')}
               </h4>
               <div className="flex flex-wrap gap-2">
-                {['Sport', 'Tennis', 'Tech', 'Voyages'].map((interest) => (
+                {dict.experience.interestList.map((interest) => (
                   <span
                     key={interest}
                     className="rounded-lg border border-white/[0.1] bg-white/[0.03] px-3 py-1.5 font-mono text-xs text-white/75"

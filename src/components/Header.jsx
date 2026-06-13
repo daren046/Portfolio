@@ -2,8 +2,37 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Menu, X, Mail } from 'lucide-react'
 import profilePic from '../assets/pfp.jpg'
+import { useLanguage } from '../i18n/LanguageContext'
+
+function LangSwitch({ className = '' }) {
+  const { lang, setLang } = useLanguage()
+
+  return (
+    <div
+      className={`inline-flex items-center rounded-lg border border-white/10 bg-white/[0.03] p-0.5 ${className}`}
+      role="group"
+      aria-label="Language"
+    >
+      {['fr', 'en'].map((code) => (
+        <button
+          key={code}
+          type="button"
+          onClick={() => setLang(code)}
+          className={`rounded-md px-2.5 py-1 text-[11px] font-mono font-semibold tracking-wider transition-colors ${
+            lang === code
+              ? 'bg-primary-500/20 text-primary-300'
+              : 'text-white/50 hover:text-white/80'
+          }`}
+        >
+          {code.toUpperCase()}
+        </button>
+      ))}
+    </div>
+  )
+}
 
 const Header = () => {
+  const { t } = useLanguage()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
@@ -29,13 +58,13 @@ const Header = () => {
   }, [])
 
   const navItems = [
-    { name: 'Accueil', href: '#home', id: 'home' },
-    { name: 'À propos', href: '#about', id: 'about' },
-    { name: 'Skills', href: '#skills', id: 'skills' },
-    { name: 'Projets', href: '#portfolio', id: 'portfolio' },
-    { name: 'Parcours', href: '#experience', id: 'experience' },
-    { name: 'Chiffres', href: '#stats', id: 'stats' },
-    { name: 'Contact', href: '#contact', id: 'contact' }
+    { name: t('nav.home'), href: '#home', id: 'home' },
+    { name: t('nav.about'), href: '#about', id: 'about' },
+    { name: t('nav.skills'), href: '#skills', id: 'skills' },
+    { name: t('nav.projects'), href: '#portfolio', id: 'portfolio' },
+    { name: t('nav.experience'), href: '#experience', id: 'experience' },
+    { name: t('nav.stats'), href: '#stats', id: 'stats' },
+    { name: t('nav.contact'), href: '#contact', id: 'contact' },
   ]
 
   const scrollToSection = (href) => {
@@ -60,7 +89,6 @@ const Header = () => {
             : 'bg-transparent border border-transparent'
         }`}
       >
-        {/* Ligne cinéma en haut du bloc (remplace les coins décoratifs) */}
         {isScrolled && (
           <div
             className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-400/45 to-transparent pointer-events-none"
@@ -70,7 +98,6 @@ const Header = () => {
 
         <div className="relative px-4 sm:px-6 py-2.5 sm:py-3">
           <div className="flex items-center justify-between gap-3">
-            {/* Logo + nom (deux lignes, plus lisible) */}
             <motion.a
               href="#home"
               onClick={(e) => {
@@ -97,11 +124,10 @@ const Header = () => {
               </span>
             </motion.a>
 
-            {/* Navigation desktop */}
             <nav className="hidden md:flex items-center justify-center gap-0.5 flex-1 min-w-0 mx-2">
               {navItems.map((item, index) => (
                 <motion.button
-                  key={item.name}
+                  key={item.id}
                   type="button"
                   initial={{ opacity: 0, y: -12 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -125,40 +151,43 @@ const Header = () => {
               ))}
             </nav>
 
-            {/* CTA desktop */}
-            <motion.button
-              type="button"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.35 }}
-              onClick={() => scrollToSection('#contact')}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-              className="btn-primary hidden md:flex items-center gap-2 shrink-0 !px-4 !py-2 text-xs"
-            >
-              <Mail className="w-4 h-4 opacity-90" strokeWidth={2} />
-              <span>CONTACT</span>
-            </motion.button>
+            <div className="hidden md:flex items-center gap-2 shrink-0">
+              <LangSwitch />
+              <motion.button
+                type="button"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.35 }}
+                onClick={() => scrollToSection('#contact')}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
+                className="btn-primary flex items-center gap-2 !px-4 !py-2 text-xs"
+              >
+                <Mail className="w-4 h-4 opacity-90" strokeWidth={2} />
+                <span>{t('nav.contactCta')}</span>
+              </motion.button>
+            </div>
 
-            {/* Menu mobile */}
-            <motion.button
-              type="button"
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 text-white hover:text-white/80 transition-colors rounded-xl hover:bg-white/10"
-              aria-expanded={isMobileMenuOpen}
-              aria-label={isMobileMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
-            >
-              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </motion.button>
+            <div className="flex md:hidden items-center gap-2">
+              <LangSwitch />
+              <motion.button
+                type="button"
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="p-2 text-white hover:text-white/80 transition-colors rounded-xl hover:bg-white/10"
+                aria-expanded={isMobileMenuOpen}
+                aria-label={isMobileMenuOpen ? t('nav.closeMenu') : t('nav.openMenu')}
+              >
+                {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </motion.button>
+            </div>
           </div>
 
-          {/* Menu mobile */}
           <motion.div
             initial={false}
             animate={{
               opacity: isMobileMenuOpen ? 1 : 0,
-              height: isMobileMenuOpen ? 'auto' : 0
+              height: isMobileMenuOpen ? 'auto' : 0,
             }}
             transition={{ duration: 0.25 }}
             className="md:hidden overflow-hidden"
@@ -166,7 +195,7 @@ const Header = () => {
             <div className="pt-4 mt-3 space-y-1 border-t border-white/10">
               {navItems.map((item) => (
                 <button
-                  key={item.name}
+                  key={item.id}
                   type="button"
                   onClick={() => scrollToSection(item.href)}
                   className={`block w-full text-left px-4 py-3 rounded-xl font-mono text-sm tracking-wide transition-colors ${
@@ -184,7 +213,7 @@ const Header = () => {
                 className="btn-primary w-full mt-3 flex items-center justify-center gap-2 !py-3 text-sm"
               >
                 <Mail className="w-4 h-4" />
-                CONTACT
+                {t('nav.contactCta')}
               </button>
             </div>
           </motion.div>

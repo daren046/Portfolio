@@ -12,6 +12,7 @@ import Footer from './components/Footer'
 import LoadingScreen from './components/LoadingScreen'
 import SectionMarquee from './components/effects/SectionMarquee'
 import EnhancedEffects from './components/EnhancedEffects'
+import { LanguageProvider } from './i18n/LanguageContext'
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
@@ -25,6 +26,7 @@ function App() {
   }, [])
 
   return (
+    <LanguageProvider>
     <div className="App">
       <AnimatePresence>
         {isLoading && <LoadingScreen />}
@@ -53,6 +55,7 @@ function App() {
         <Footer />
       </motion.div>
     </div>
+    </LanguageProvider>
   )
 }
 

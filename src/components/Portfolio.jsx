@@ -4,9 +4,10 @@ import { useInView } from 'react-intersection-observer'
 import { ExternalLink, Github, BookOpen } from 'lucide-react'
 import CinematicSectionHeader from './CinematicSectionHeader'
 import ProjectCaseStudyModal from './ProjectCaseStudyModal'
+import { useLanguage } from '../i18n/LanguageContext'
 import { GITHUB_USERNAME, buildProjectFromRepo, categoryFallbackImages, GRID_SIZES, sortProjects } from '../data/projects'
 
-function ProjectActions({ project, onOpenCaseStudy, compact = false }) {
+function ProjectActions({ project, onOpenCaseStudy, compact = false, labels }) {
   const btnClass = compact
     ? 'flex h-10 w-10 items-center justify-center rounded-xl border border-white/80 text-white transition-all duration-150 hover:bg-white hover:text-black'
     : 'inline-flex items-center gap-2 rounded-xl border border-white/25 px-4 py-2 font-mono text-xs tracking-wider text-white transition-all hover:border-primary-400/50 hover:bg-primary-500/10 hover:text-primary-200'
@@ -21,13 +22,13 @@ function ProjectActions({ project, onOpenCaseStudy, compact = false }) {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className={btnClass}
-          title="Voir le projet en live"
+          title={labels.liveTitle}
           onClick={(e) => e.stopPropagation()}
         >
           {compact ? <ExternalLink className="w-4 h-4" /> : (
             <>
               <ExternalLink className="w-3.5 h-3.5" />
-              Live
+              {labels.live}
             </>
           )}
         </motion.a>
@@ -38,7 +39,7 @@ function ProjectActions({ project, onOpenCaseStudy, compact = false }) {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className={compact ? btnClass : `${btnClass} border-primary-400/40 bg-primary-500/10`}
-          title="Lire la case study"
+          title={labels.caseStudyTitle}
           onClick={(e) => {
             e.stopPropagation()
             onOpenCaseStudy(project)
@@ -47,7 +48,7 @@ function ProjectActions({ project, onOpenCaseStudy, compact = false }) {
           {compact ? <BookOpen className="w-4 h-4" /> : (
             <>
               <BookOpen className="w-3.5 h-3.5" />
-              Case study
+              {labels.caseStudy}
             </>
           )}
         </motion.button>
@@ -60,13 +61,13 @@ function ProjectActions({ project, onOpenCaseStudy, compact = false }) {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className={btnClass}
-          title="Voir sur GitHub"
+          title={labels.githubTitle}
           onClick={(e) => e.stopPropagation()}
         >
           {compact ? <Github className="w-4 h-4" /> : (
             <>
               <Github className="w-3.5 h-3.5" />
-              GitHub
+              {labels.github}
             </>
           )}
         </motion.a>
@@ -76,6 +77,7 @@ function ProjectActions({ project, onOpenCaseStudy, compact = false }) {
 }
 
 const Portfolio = () => {
+  const { t } = useLanguage()
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1
@@ -87,11 +89,20 @@ const Portfolio = () => {
   const [caseStudyProject, setCaseStudyProject] = useState(null)
 
   const filters = [
-    { id: 'all', label: 'ALL' },
-    { id: 'web', label: 'WEB' },
-    { id: 'backend', label: 'BACKEND' },
-    { id: 'academic', label: 'ACADEMIC' }
+    { id: 'all', label: t('portfolio.filters.all') },
+    { id: 'web', label: t('portfolio.filters.web') },
+    { id: 'backend', label: t('portfolio.filters.backend') },
+    { id: 'academic', label: t('portfolio.filters.academic') },
   ]
+
+  const actionLabels = {
+    live: t('portfolio.live'),
+    caseStudy: t('portfolio.caseStudy'),
+    github: t('portfolio.github'),
+    liveTitle: t('portfolio.liveTitle'),
+    caseStudyTitle: t('portfolio.caseStudyTitle'),
+    githubTitle: t('portfolio.githubTitle'),
+  }
 
   useEffect(() => {
     let cancelled = false
@@ -138,9 +149,9 @@ const Portfolio = () => {
           className="max-w-7xl mx-auto"
         >
           <CinematicSectionHeader
-            eyebrow="Sélection"
-            title={<span className="text-white">PROJECTS</span>}
-            subtitle="Projets open source — demos live, code GitHub et case studies."
+            eyebrow={t('portfolio.eyebrow')}
+            title={<span className="text-white">{t('portfolio.title')}</span>}
+            subtitle={t('portfolio.subtitle')}
             inView={inView}
           />
 
@@ -165,11 +176,11 @@ const Portfolio = () => {
           </motion.div>
 
           {loading && (
-            <p className="text-center text-white/50 font-mono text-sm mb-8">Chargement des projets GitHub…</p>
+            <p className="text-center text-white/50 font-mono text-sm mb-8">{t('portfolio.loading')}</p>
           )}
 
           {!loading && filteredProjects.length === 0 && (
-            <p className="text-center text-white/50 font-mono text-sm mb-8">Aucun projet dans cette catégorie.</p>
+            <p className="text-center text-white/50 font-mono text-sm mb-8">{t('portfolio.empty')}</p>
           )}
 
           <div className="grid grid-cols-12 gap-4 auto-rows-[220px] md:auto-rows-[240px]">
@@ -231,6 +242,7 @@ const Portfolio = () => {
                             project={project}
                             onOpenCaseStudy={setCaseStudyProject}
                             compact={!isLargeTile}
+                            labels={actionLabels}
                           />
                         </div>
                       </div>
@@ -265,7 +277,7 @@ const Portfolio = () => {
               className="btn-secondary inline-flex items-center gap-2 px-8 py-3"
             >
               <Github className="w-4 h-4" />
-              <span>VOIR PLUS SUR GITHUB</span>
+              <span>{t('portfolio.seeMoreGithub')}</span>
             </motion.a>
           </motion.div>
         </motion.div>

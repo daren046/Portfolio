@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
+import { useLanguage } from '../i18n/LanguageContext'
 
 const LoadingScreen = () => {
+  const { t } = useLanguage()
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
@@ -38,7 +40,7 @@ const LoadingScreen = () => {
           transition={{ delay: 0.15 }}
           className="mb-6 text-[10px] font-mono tracking-[0.45em] text-white/40"
         >
-          PORTFOLIO
+          {t('loading.label')}
         </motion.p>
 
         <div className="relative tabular-nums">
@@ -46,7 +48,7 @@ const LoadingScreen = () => {
             {progress}
           </span>
           <span className="mt-2 block text-center text-xs font-mono tracking-[0.35em] text-white/35">
-            LOADING
+            {t('loading.status')}
           </span>
         </div>
       </div>

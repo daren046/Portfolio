@@ -3,95 +3,16 @@ import { useInView } from 'react-intersection-observer'
 import { useEffect, useMemo, useState } from 'react'
 import { ArrowRight } from 'lucide-react'
 import CinematicSectionHeader from './CinematicSectionHeader'
+import { useLanguage } from '../i18n/LanguageContext'
+import { skillCategories } from '../i18n/translations'
 
-const skillCategories = [
-  {
-    id: 'frontend',
-    name: 'Frontend',
-    color: '#61DAFB',
-    skills: [
-      { name: 'React', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg' },
-      { name: 'JavaScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg' },
-      { name: 'TypeScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg' },
-      { name: 'Tailwind CSS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg' },
-      { name: 'Vite', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vite/vite-original.svg' },
-      { name: 'HTML5', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg' },
-      { name: 'CSS3', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg' },
-    ]
-  },
-  {
-    id: 'backend',
-    name: 'Backend',
-    color: '#68BD45',
-    skills: [
-      { name: 'Java', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg' },
-      { name: 'Spring Boot', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original.svg' },
-      { name: 'Spring Security', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original.svg' },
-      { name: 'Micronaut', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg' },
-      { name: 'Maven', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/maven/maven-original.svg' },
-      { name: 'REST API', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-icon.svg' },
-    ]
-  },
-  {
-    id: 'database',
-    name: 'Databases',
-    color: '#336791',
-    skills: [
-      { name: 'JPA', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/hibernate/hibernate-original.svg' },
-      { name: 'Hibernate', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/hibernate/hibernate-original.svg' },
-      { name: 'H2', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlite/sqlite-original.svg' },
-      { name: 'SQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg' },
-    ]
-  },
-  {
-    id: 'tools',
-    name: 'Tools & DevOps',
-    color: '#2496ED',
-    skills: [
-      { name: 'Git', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg' },
-      { name: 'GitHub', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg' },
-      { name: 'JGit', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg' },
-      { name: 'Framer Motion', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg' },
-      { name: 'VS Code', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg' },
-    ]
-  }
-]
-
-const skillBlurbs = {
-  React: 'Composants, hooks et routing — frontend BooqIn (React 19) et ce portfolio (React 18).',
-  JavaScript: 'Langage du portfolio et logique front sur mes projets web.',
-  TypeScript: 'Frontend typé sur BooqIn et l’interface web de GitClout.',
-  'Tailwind CSS': 'Styling utilitaire — Tailwind 3 sur ce portfolio, Tailwind 4 sur BooqIn.',
-  Vite: 'Build tool utilisé sur ce portfolio et le frontend BooqIn.',
-  HTML5: 'Structure sémantique et bases accessibles sur tous mes fronts.',
-  CSS3: 'Mise en page, animations et responsive design.',
-  Java: 'Langage principal — Java 21 sur BooqIn et GitClout.',
-  'Spring Boot': 'API REST, validation et JPA sur BooqIn (Spring Boot 3.4).',
-  'Spring Security': 'Authentification JWT et sécurisation des endpoints BooqIn.',
-  Micronaut: 'Framework backend sur GitClout — HTTP Netty, JPA et OpenAPI.',
-  Maven: 'Build, packaging et exécution des projets Java (BooqIn, GitClout).',
-  'REST API': 'Conception d’APIs REST et consommation côté React (Axios).',
-  JPA: 'Persistence des entités avec Spring Data JPA (BooqIn) et Micronaut Data (GitClout).',
-  Hibernate: 'ORM sous-jacent à JPA pour le mapping objet-relationnel.',
-  H2: 'Base embarquée en dev sur BooqIn et GitClout.',
-  SQL: 'Modélisation, requêtes et administration — alternance admin BDD.',
-  Git: 'Versioning, branches et collaboration sur tous mes dépôts.',
-  GitHub: 'Hébergement open source — daren046/BooqIn, Gitclout, Portfolio.',
-  JGit: 'Analyse et manipulation de dépôts Git dans le projet GitClout.',
-  'Framer Motion': 'Animations et transitions sur ce portfolio.',
-  'VS Code': 'IDE principal au quotidien.',
-}
-
-function blurbFor(name) {
-  return skillBlurbs[name] || `Technologie utilisée dans mes projets et mon environnement de travail.`
-}
-
-function DeckBlock({ category, inView, reduceMotion, catIndex, showCategoryLabel, chapterNumber, totalChapters }) {
+function DeckBlock({ category, categoryLabel, inView, reduceMotion, catIndex, showCategoryLabel, chapterNumber, totalChapters, t, blurbs }) {
   const [index, setIndex] = useState(0)
   const skill = category.skills[index] ?? category.skills[0]
   const color = category.color
   const totalSkills = category.skills.length
   const progressPercent = totalSkills > 0 ? ((index + 1) / totalSkills) * 100 : 0
+  const blurbFor = (name) => blurbs[name] || t('skills.defaultBlurb')
 
   useEffect(() => {
     setIndex(0)
@@ -105,7 +26,7 @@ function DeckBlock({ category, inView, reduceMotion, catIndex, showCategoryLabel
       className="relative"
     >
       {showCategoryLabel && (
-        <h3 className="sr-only">{category.name}</h3>
+        <h3 className="sr-only">{categoryLabel}</h3>
       )}
 
       <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 items-stretch">
@@ -130,7 +51,7 @@ function DeckBlock({ category, inView, reduceMotion, catIndex, showCategoryLabel
               {chapterNumber}
             </span>
             <span className="text-[9px] font-mono tracking-[0.35em] text-white/35 uppercase mt-1">
-              chap. {chapterNumber}/{String(totalChapters).padStart(2, '0')}
+              {t('skills.chapter')} {chapterNumber}/{String(totalChapters).padStart(2, '0')}
             </span>
           </div>
 
@@ -141,7 +62,7 @@ function DeckBlock({ category, inView, reduceMotion, catIndex, showCategoryLabel
               aria-valuemin={1}
               aria-valuemax={totalSkills}
               aria-valuenow={index + 1}
-              aria-label={`Technologie ${index + 1} sur ${totalSkills}`}
+              aria-label={t('skills.techProgress').replace('{current}', index + 1).replace('{total}', totalSkills)}
             >
               <motion.div
                 className="absolute bottom-0 left-0 right-0 rounded-full"
@@ -165,7 +86,7 @@ function DeckBlock({ category, inView, reduceMotion, catIndex, showCategoryLabel
             className="text-[10px] sm:text-xs font-mono tracking-[0.35em] text-white/50 uppercase lg:[writing-mode:vertical-rl] lg:rotate-180 select-none"
             aria-hidden
           >
-            {category.name.replace(' & ', ' / ')}
+            {categoryLabel.replace(' & ', ' / ')}
           </span>
           <div
             className="hidden lg:block w-px h-40 bg-gradient-to-b from-transparent via-primary-400/40 to-transparent"
@@ -211,7 +132,7 @@ function DeckBlock({ category, inView, reduceMotion, catIndex, showCategoryLabel
                     className="relative h-full flex flex-col p-6 sm:p-8"
                   >
                     <p className="text-[10px] font-mono tracking-[0.25em] text-white/40 uppercase mb-6">
-                      {category.name}
+                      {categoryLabel}
                     </p>
                     <div className="flex-1 flex flex-col items-center justify-center gap-5">
                       <div
@@ -235,7 +156,7 @@ function DeckBlock({ category, inView, reduceMotion, catIndex, showCategoryLabel
                         el?.scrollIntoView({ behavior: 'smooth' })
                       }}
                     >
-                      VOIR PROJETS
+                      {t('skills.viewProjects')}
                       <ArrowRight className="w-3.5 h-3.5 group-hover/detail:translate-x-0.5 transition-transform" />
                     </button>
                   </motion.div>
@@ -243,7 +164,6 @@ function DeckBlock({ category, inView, reduceMotion, catIndex, showCategoryLabel
               </motion.div>
             </div>
 
-            {/* Panneau détails (portfolio) */}
             <div className="flex flex-col justify-center gap-4 min-h-[200px]">
               <AnimatePresence mode="wait">
                 <motion.div
@@ -254,14 +174,14 @@ function DeckBlock({ category, inView, reduceMotion, catIndex, showCategoryLabel
                   transition={{ duration: 0.2 }}
                   className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6 backdrop-blur-sm"
                 >
-                  <p className="text-xs font-mono text-primary-400 tracking-widest mb-2">DÉTAILS</p>
+                  <p className="text-xs font-mono text-primary-400 tracking-widest mb-2">{t('skills.details')}</p>
                   <p className="text-white/80 text-sm sm:text-base leading-relaxed">
                     {blurbFor(skill.name)}
                   </p>
                 </motion.div>
               </AnimatePresence>
               <p className="text-xs text-white/35 font-mono">
-                Sélectionne une miniature ci-dessous pour parcourir le deck.
+                {t('skills.deckHint')}
               </p>
             </div>
           </div>
@@ -286,7 +206,7 @@ function DeckBlock({ category, inView, reduceMotion, catIndex, showCategoryLabel
                       }
                     `}
                     style={active ? { boxShadow: `0 8px 24px ${color}35` } : undefined}
-                    aria-label={`Afficher ${s.name}`}
+                    aria-label={t('skills.showSkill').replace('{name}', s.name)}
                     aria-pressed={active}
                   >
                     <div
@@ -306,6 +226,8 @@ function DeckBlock({ category, inView, reduceMotion, catIndex, showCategoryLabel
 }
 
 const Skills = () => {
+  const { t, dict } = useLanguage()
+  const blurbs = dict.skills.blurbs
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1
@@ -350,9 +272,9 @@ const Skills = () => {
           className="max-w-6xl mx-auto"
         >
           <CinematicSectionHeader
-            eyebrow="Stack"
-            title={<span className="text-white">SKILLS</span>}
-            subtitle="Technologies & outils — parcours en deck, une catégorie à la fois."
+            eyebrow={t('skills.eyebrow')}
+            title={<span className="text-white">{t('skills.title')}</span>}
+            subtitle={t('skills.subtitle')}
             inView={inView}
           />
 
@@ -369,7 +291,7 @@ const Skills = () => {
                 activeCategory === 'all' ? 'btn-filter-active' : 'btn-filter-inactive'
               }`}
             >
-              ALL
+              {t('skills.all')}
             </button>
             {skillCategories.map((cat) => (
               <button
@@ -380,7 +302,7 @@ const Skills = () => {
                   activeCategory === cat.id ? 'btn-filter-active' : 'btn-filter-inactive'
                 }`}
               >
-                {cat.name.toUpperCase()}
+                {t(`skills.categories.${cat.id}`).toUpperCase()}
               </button>
             ))}
           </motion.div>
@@ -390,12 +312,15 @@ const Skills = () => {
               <DeckBlock
                 key={category.id}
                 category={category}
+                categoryLabel={t(`skills.categories.${category.id}`)}
                 inView={inView}
                 reduceMotion={reduceMotion}
                 catIndex={catIndex}
                 showCategoryLabel={activeCategory === 'all'}
                 chapterNumber={String(catIndex + 1).padStart(2, '0')}
                 totalChapters={filteredCategories.length}
+                t={t}
+                blurbs={blurbs}
               />
             ))}
           </div>

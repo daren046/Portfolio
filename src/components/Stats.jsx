@@ -3,6 +3,7 @@ import { useInView } from 'react-intersection-observer'
 import { useEffect } from 'react'
 import { Code, Briefcase, Coffee, Award } from 'lucide-react'
 import CinematicSectionHeader from './CinematicSectionHeader'
+import { useLanguage } from '../i18n/LanguageContext'
 
 const AnimatedCounter = ({ value, duration = 2 }) => {
   const count = useMotionValue(0)
@@ -20,40 +21,17 @@ const AnimatedCounter = ({ value, duration = 2 }) => {
 }
 
 const Stats = () => {
+  const { t } = useLanguage()
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.2
   })
 
   const stats = [
-    {
-      icon: Briefcase,
-      value: '5',
-      suffix: '+',
-      label: "Années d'expérience",
-      color: '#6366F1'
-    },
-    {
-      icon: Code,
-      value: '22',
-      suffix: '',
-      label: 'Technologies (stack réelle)',
-      color: '#8B5CF6'
-    },
-    {
-      icon: Award,
-      value: '3',
-      suffix: '',
-      label: 'Projets sur GitHub',
-      color: '#EC4899'
-    },
-    {
-      icon: Coffee,
-      value: '2',
-      suffix: '',
-      label: 'Alternances réalisées',
-      color: '#F59E0B'
-    }
+    { icon: Briefcase, value: '5', suffix: '+', label: t('stats.years'), color: '#6366F1' },
+    { icon: Code, value: '22', suffix: '', label: t('stats.techs'), color: '#8B5CF6' },
+    { icon: Award, value: '3', suffix: '', label: t('stats.githubProjects'), color: '#EC4899' },
+    { icon: Coffee, value: '2', suffix: '', label: t('stats.internships'), color: '#F59E0B' },
   ]
 
   return (
@@ -68,9 +46,9 @@ const Stats = () => {
           className="max-w-6xl mx-auto"
         >
           <CinematicSectionHeader
-            eyebrow="Repères"
-            title={<span className="text-white">CHIFFRES</span>}
-            subtitle="Quelques indicateurs — expérience, stack, projets et carburant."
+            eyebrow={t('stats.eyebrow')}
+            title={<span className="text-white">{t('stats.title')}</span>}
+            subtitle={t('stats.subtitle')}
             inView={inView}
           />
 

@@ -1,15 +1,12 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Github, ExternalLink } from 'lucide-react'
 import { useEffect } from 'react'
-
-const SECTION_LABELS = {
-  problem: 'Problème',
-  stack: 'Stack',
-  role: 'Ce que j\'ai fait',
-  result: 'Résultat',
-}
+import { useLanguage } from '../i18n/LanguageContext'
 
 export default function ProjectCaseStudyModal({ project, onClose }) {
+  const { t, dict } = useLanguage()
+  const sectionLabels = dict.caseStudy.sections
+
   useEffect(() => {
     if (!project) return
 
@@ -42,7 +39,7 @@ export default function ProjectCaseStudyModal({ project, onClose }) {
             type="button"
             className="absolute inset-0 bg-black/80 backdrop-blur-sm"
             onClick={onClose}
-            aria-label="Fermer"
+            aria-label={t('caseStudy.close')}
           />
 
           <motion.div
@@ -56,7 +53,7 @@ export default function ProjectCaseStudyModal({ project, onClose }) {
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <p className="mb-1 font-mono text-[10px] tracking-[0.35em] text-primary-400 uppercase">
-                    Case study
+                    {t('caseStudy.label')}
                   </p>
                   <h2 id="case-study-title" className="font-mono text-xl font-bold tracking-wider text-white sm:text-2xl">
                     {project.title}
@@ -69,7 +66,7 @@ export default function ProjectCaseStudyModal({ project, onClose }) {
                   type="button"
                   onClick={onClose}
                   className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/15 text-white/70 transition-colors hover:border-white/30 hover:text-white"
-                  aria-label="Fermer la case study"
+                  aria-label={t('caseStudy.close')}
                 >
                   <X className="h-4 w-4" />
                 </button>
@@ -81,7 +78,7 @@ export default function ProjectCaseStudyModal({ project, onClose }) {
                 {Object.entries(project.caseStudy.sections).map(([key, text], index) => (
                   <div key={key} className="cine-surface p-4 sm:p-5">
                     <p className="mb-2 font-mono text-[10px] tracking-[0.3em] text-primary-400/90 uppercase">
-                      {String(index + 1).padStart(2, '0')} — {SECTION_LABELS[key] ?? key}
+                      {String(index + 1).padStart(2, '0')} — {sectionLabels[key] ?? key}
                     </p>
                     <p className="text-sm leading-relaxed text-white/75 sm:text-base">{text}</p>
                   </div>
@@ -111,7 +108,7 @@ export default function ProjectCaseStudyModal({ project, onClose }) {
                   className="btn-primary inline-flex flex-1 items-center justify-center gap-2 sm:flex-none"
                 >
                   <ExternalLink className="h-4 w-4" />
-                  Voir le projet
+                  {t('caseStudy.viewLive')}
                 </a>
               )}
               {project.githubUrl && (
@@ -122,7 +119,7 @@ export default function ProjectCaseStudyModal({ project, onClose }) {
                   className="btn-secondary inline-flex flex-1 items-center justify-center gap-2 sm:flex-none"
                 >
                   <Github className="h-4 w-4" />
-                  GitHub
+                  {t('caseStudy.github')}
                 </a>
               )}
             </div>
