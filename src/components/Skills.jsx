@@ -123,7 +123,7 @@ function DeckBlock({ category, categoryLabel, inView, reduceMotion, catIndex, sh
               <div className="absolute -right-1 top-3 bottom-3 w-full max-w-[280px] rounded-[1.25rem] border border-white/5 bg-white/[0.03] -z-10 translate-x-1.5 rotate-[0.5deg]" />
 
               <motion.div
-                className="relative aspect-[3/4] rounded-[1.25rem] overflow-hidden border border-white/10 bg-black/40 shadow-2xl"
+                className="relative min-h-[360px] sm:min-h-[380px] rounded-[1.25rem] overflow-hidden border border-white/10 bg-black/40 shadow-2xl"
                 style={{ transformStyle: 'preserve-3d' }}
                 whileHover={reduceMotion ? {} : { rotateY: -6, rotateX: 4, scale: 1.02 }}
                 transition={{ type: 'spring', stiffness: 220, damping: 22 }}
@@ -143,36 +143,35 @@ function DeckBlock({ category, categoryLabel, inView, reduceMotion, catIndex, sh
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -8 }}
                     transition={{ duration: 0.25 }}
-                    className="relative h-full flex flex-col p-6 sm:p-8"
+                    className="relative flex h-full min-h-[360px] sm:min-h-[380px] flex-col p-5 sm:p-6"
                   >
-                    <p className="text-[10px] font-mono tracking-[0.25em] text-white/40 uppercase mb-6">
+                    <p className="shrink-0 text-[10px] font-mono tracking-[0.25em] text-white/40 uppercase">
                       {categoryLabel}
                     </p>
-                    <div className="flex-1 flex flex-col items-center justify-center gap-5">
+                    <div className="flex flex-1 flex-col items-center justify-center gap-4 py-4">
                       <div
-                        className="rounded-2xl border border-white/10 bg-black/50 p-5 shadow-inner"
+                        className="rounded-2xl border border-white/10 bg-black/50 p-4 shadow-inner sm:p-5"
                         style={{ boxShadow: `0 0 40px ${color}22` }}
                       >
-                        <SkillIcon name={skill.name} icon={skill.icon} className="w-16 h-16 sm:w-20 sm:h-20 object-contain" />
+                        <SkillIcon name={skill.name} icon={skill.icon} className="h-14 w-14 sm:h-16 sm:w-16 object-contain" />
                       </div>
-                      <h4 className="text-2xl sm:text-3xl font-bold font-mono tracking-tight text-white text-center">
+                      <h4 className="max-w-[220px] text-center font-mono text-xl font-bold leading-snug tracking-tight text-white sm:text-2xl">
                         {skill.name}
                       </h4>
                     </div>
-                    <p className="text-sm text-white/60 leading-relaxed mt-auto pt-6 border-t border-white/10">
-                      {blurbFor(skill.name)}
-                    </p>
-                    <button
-                      type="button"
-                      className="mt-4 inline-flex items-center gap-2 self-end text-xs font-mono tracking-[0.2em] text-white/50 hover:text-primary-400 transition-colors group/detail"
-                      onClick={() => {
-                        const el = document.querySelector('#portfolio')
-                        el?.scrollIntoView({ behavior: 'smooth' })
-                      }}
-                    >
-                      {t('skills.viewProjects')}
-                      <ArrowRight className="w-3.5 h-3.5 group-hover/detail:translate-x-0.5 transition-transform" />
-                    </button>
+                    <div className="shrink-0 border-t border-white/10 pt-4">
+                      <button
+                        type="button"
+                        className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-3 py-2.5 text-xs font-mono tracking-[0.2em] text-white/70 transition-colors hover:border-primary-400/40 hover:text-primary-300 group/detail"
+                        onClick={() => {
+                          const el = document.querySelector('#portfolio')
+                          el?.scrollIntoView({ behavior: 'smooth' })
+                        }}
+                      >
+                        {t('skills.viewProjects')}
+                        <ArrowRight className="h-3.5 w-3.5 group-hover/detail:translate-x-0.5 transition-transform" />
+                      </button>
+                    </div>
                   </motion.div>
                 </AnimatePresence>
               </motion.div>
