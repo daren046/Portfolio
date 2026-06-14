@@ -484,7 +484,7 @@ export const skillCategories = [
       { name: 'Spring Security', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original.svg' },
       { name: 'Micronaut', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg' },
       { name: 'Maven', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/maven/maven-original.svg' },
-      { name: 'REST API', icon: 'https://cdn.simpleicons.org/openapiinitiative/38bdf8' },
+      { name: 'REST API', icon: null },
     ],
   },
   {
