@@ -3,6 +3,9 @@ import { ChevronDown } from 'lucide-react'
 import { useState, useEffect, useRef } from 'react'
 import MagneticButton from './MagneticButton'
 import { useLanguage } from '../i18n/LanguageContext'
+import { resolveAssetUrl } from '../utils/resolveAssetUrl'
+
+const CV_PDF = resolveAssetUrl('CV_DAREN_TAGNAN_FR.pdf')
 
 const Hero = () => {
   const { t } = useLanguage()
@@ -326,7 +329,7 @@ const Hero = () => {
               </span>
             </MagneticButton>
             
-            <a href="/CV_DAREN_TAGNAN_FR.pdf" download="CV_Daren_Tagnan.pdf">
+            <a href={CV_PDF} download="CV_Daren_Tagnan.pdf" target="_blank" rel="noopener noreferrer">
               <MagneticButton
                 strength={0.4}
                 className="group relative rounded-xl border-2 border-white/40 text-white transition-all duration-500 hover:border-white hover:bg-white hover:text-black px-8 py-4 font-mono tracking-wider ring-1 ring-white/10"

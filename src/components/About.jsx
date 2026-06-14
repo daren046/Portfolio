@@ -4,6 +4,9 @@ import { Download, ArrowRight } from 'lucide-react'
 import profilePic from '../assets/pfp.jpg'
 import CinematicSectionHeader from './CinematicSectionHeader'
 import { useLanguage } from '../i18n/LanguageContext'
+import { resolveAssetUrl } from '../utils/resolveAssetUrl'
+
+const CV_PDF = resolveAssetUrl('CV_DAREN_TAGNAN_FR.pdf')
 
 const About = () => {
   const { t } = useLanguage()
@@ -141,8 +144,10 @@ const About = () => {
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </a>
                 <a 
-                  href="/CV_DAREN_TAGNAN_FR.pdf"
+                  href={CV_PDF}
                   download="CV_Daren_Tagnan.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="btn-secondary group inline-flex items-center gap-2"
                 >
                   <Download className="w-4 h-4 group-hover:animate-bounce" />
