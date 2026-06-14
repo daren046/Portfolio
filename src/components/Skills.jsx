@@ -5,6 +5,7 @@ import { ArrowRight } from 'lucide-react'
 import CinematicSectionHeader from './CinematicSectionHeader'
 import { useLanguage } from '../i18n/LanguageContext'
 import { skillCategories } from '../i18n/translations'
+import { resolveAssetUrl } from '../utils/resolveAssetUrl'
 
 function DeckBlock({ category, categoryLabel, inView, reduceMotion, catIndex, showCategoryLabel, chapterNumber, totalChapters, t, blurbs }) {
   const [index, setIndex] = useState(0)
@@ -139,7 +140,7 @@ function DeckBlock({ category, categoryLabel, inView, reduceMotion, catIndex, sh
                         className="rounded-2xl border border-white/10 bg-black/50 p-5 shadow-inner"
                         style={{ boxShadow: `0 0 40px ${color}22` }}
                       >
-                        <img src={skill.icon} alt="" className="w-16 h-16 sm:w-20 sm:h-20 object-contain" />
+                        <img src={resolveAssetUrl(skill.icon)} alt="" className="w-16 h-16 sm:w-20 sm:h-20 object-contain" />
                       </div>
                       <h4 className="text-2xl sm:text-3xl font-bold font-mono tracking-tight text-white text-center">
                         {skill.name}
@@ -213,7 +214,7 @@ function DeckBlock({ category, categoryLabel, inView, reduceMotion, catIndex, sh
                       className="absolute inset-0 opacity-30"
                       style={{ background: `radial-gradient(circle at 30% 20%, ${color}, transparent 70%)` }}
                     />
-                    <img src={s.icon} alt="" className="relative w-full h-full object-contain p-2" />
+                    <img src={resolveAssetUrl(s.icon)} alt="" className="relative w-full h-full object-contain p-2" />
                   </button>
                 )
               })}

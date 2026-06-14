@@ -7,6 +7,8 @@ const ITEMS = [
   'VITE',
   'MICRONAUT',
   'GIT',
+  'GITHUB ACTIONS',
+  'DOCKER',
   'SQL',
   'FULL STACK',
 ]
