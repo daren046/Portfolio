@@ -6,7 +6,7 @@ const Footer = () => {
   const { t } = useLanguage()
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    window.scrollTo({ top: 0, behavior: 'instant' })
   }
 
   const currentYear = new Date().getFullYear()

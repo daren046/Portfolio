@@ -32,7 +32,7 @@ const MagneticButton = ({
     <motion.button
       ref={buttonRef}
       animate={{ x: position.x, y: position.y }}
-      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+      transition={{ type: 'spring', stiffness: 380, damping: 30, mass: 0.65 }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
@@ -42,7 +42,7 @@ const MagneticButton = ({
       <motion.div
         className="pointer-events-none absolute inset-0"
         style={{
-          background: `radial-gradient(circle at ${50 + position.x * 0.15}% ${50 + position.y * 0.15}%, rgba(56, 189, 248, 0.12) 0%, transparent 70%)`,
+          background: `radial-gradient(circle at ${50 + position.x * 0.15}% ${50 + position.y * 0.15}%, rgba(80, 104, 224, 0.11) 0%, transparent 70%)`,
         }}
       />
       {children}

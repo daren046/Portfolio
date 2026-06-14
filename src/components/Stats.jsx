@@ -42,7 +42,7 @@ const Stats = () => {
           ref={ref}
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
           className="max-w-6xl mx-auto"
         >
           <CinematicSectionHeader

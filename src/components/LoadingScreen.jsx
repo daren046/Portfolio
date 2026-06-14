@@ -1,27 +1,43 @@
 import { motion } from 'framer-motion'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useLanguage } from '../i18n/LanguageContext'
+import { LOADING_DURATION_MS } from '../constants/loading'
 
-const LoadingScreen = () => {
+const LoadingScreen = ({ duration = LOADING_DURATION_MS, onComplete }) => {
   const { t } = useLanguage()
   const [progress, setProgress] = useState(0)
+  const completedRef = useRef(false)
 
   useEffect(() => {
-    let currentProgress = 0
-    const interval = setInterval(() => {
-      currentProgress += 1
-      setProgress(currentProgress)
-      if (currentProgress >= 100) clearInterval(interval)
-    }, 22)
+    completedRef.current = false
+    const start = performance.now()
+    let frameId
 
-    return () => clearInterval(interval)
-  }, [])
+    const tick = (now) => {
+      const elapsed = now - start
+      const pct = Math.min(100, Math.round((elapsed / duration) * 100))
+      setProgress(pct)
+
+      if (pct >= 100) {
+        if (!completedRef.current) {
+          completedRef.current = true
+          onComplete?.()
+        }
+        return
+      }
+
+      frameId = requestAnimationFrame(tick)
+    }
+
+    frameId = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(frameId)
+  }, [duration, onComplete])
 
   return (
     <motion.div
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.75 }}
+      transition={{ duration: 0.5 }}
       className="fixed inset-0 z-[60] flex flex-col items-center justify-center overflow-hidden bg-[#050508]"
     >
       <div
@@ -37,7 +53,7 @@ const LoadingScreen = () => {
         <motion.p
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15 }}
+          transition={{ delay: 0.15, duration: 0.4 }}
           className="mb-6 text-[10px] font-mono tracking-[0.45em] text-white/40"
         >
           {t('loading.label')}
@@ -60,7 +76,7 @@ const LoadingScreen = () => {
             className="h-full rounded-full bg-white"
             initial={{ width: '0%' }}
             animate={{ width: `${progress}%` }}
-            transition={{ duration: 0.12 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
           />
         </div>
       </div>

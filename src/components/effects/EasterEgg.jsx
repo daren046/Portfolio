@@ -19,7 +19,7 @@ const EasterEgg = () => {
         if (SEQUENCES.some((seq) => next.endsWith(seq))) {
           setMessage('Mode cinéma activé — bon visionnage.')
           setTimeout(() => {
-            document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+            document.getElementById('contact')?.scrollIntoView({ behavior: 'instant', block: 'start' })
           }, 600)
           setTimeout(() => setMessage(null), 3200)
         }
@@ -38,7 +38,7 @@ const EasterEgg = () => {
           initial={{ opacity: 0, y: 16, scale: 0.96 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: -8 }}
-          className="fixed bottom-6 left-1/2 z-[80] -translate-x-1/2 rounded-xl border border-primary-400/30 bg-black/90 px-5 py-3 font-mono text-xs tracking-wider text-primary-200 shadow-[0_0_24px_rgba(14,165,233,0.12)] backdrop-blur-md"
+          className="fixed bottom-6 left-1/2 z-[80] -translate-x-1/2 rounded-xl border border-primary-400/30 bg-black/90 px-5 py-3 font-mono text-xs tracking-wider text-primary-200 shadow-[0_0_24px_rgba(80,104,224,0.12)] backdrop-blur-md"
           role="status"
         >
           {message}

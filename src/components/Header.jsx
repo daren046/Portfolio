@@ -53,7 +53,7 @@ const Header = () => {
       if (current) setActiveSection(current)
     }
 
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
@@ -70,7 +70,7 @@ const Header = () => {
   const scrollToSection = (href) => {
     const element = document.querySelector(href)
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
+      element.scrollIntoView({ behavior: 'instant', block: 'start' })
     }
     setIsMobileMenuOpen(false)
   }
@@ -79,11 +79,11 @@ const Header = () => {
     <motion.header
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.45 }}
       className="fixed top-0 left-0 right-0 z-50 px-3 sm:px-4 py-3 sm:py-4"
     >
       <div
-        className={`max-w-6xl mx-auto relative overflow-hidden rounded-2xl transition-all duration-500 ${
+        className={`max-w-6xl mx-auto relative overflow-hidden rounded-2xl transition-all duration-300 ${
           isScrolled
             ? 'bg-black/75 backdrop-blur-xl border border-white/[0.08] shadow-[0_8px_40px_rgba(0,0,0,0.45),0_0_0_1px_rgba(255,255,255,0.04)_inset]'
             : 'bg-transparent border border-transparent'
@@ -142,7 +142,7 @@ const Header = () => {
                   {activeSection === item.id && (
                     <motion.div
                       layoutId="activeNav"
-                      className="absolute inset-0 rounded-lg border border-primary-400/30 bg-primary-500/10 shadow-[0_0_16px_rgba(14,165,233,0.12)]"
+                      className="absolute inset-0 rounded-lg border border-primary-400/30 bg-primary-500/10 shadow-[0_0_16px_rgba(80,104,224,0.14)]"
                       transition={{ type: 'spring', bounce: 0.15, duration: 0.45 }}
                     />
                   )}

@@ -9,7 +9,7 @@ import { GITHUB_USERNAME, buildProjectFromRepo, categoryFallbackImages, GRID_SIZ
 
 function ProjectActions({ project, onOpenCaseStudy, compact = false, labels }) {
   const btnClass = compact
-    ? 'flex h-10 w-10 items-center justify-center rounded-xl border border-white/80 text-white transition-all duration-150 hover:bg-white hover:text-black'
+    ? 'flex h-10 w-10 items-center justify-center rounded-xl border border-white/80 text-white transition-all duration-300 hover:bg-white hover:text-black'
     : 'inline-flex items-center gap-2 rounded-xl border border-white/25 px-4 py-2 font-mono text-xs tracking-wider text-white transition-all hover:border-primary-400/50 hover:bg-primary-500/10 hover:text-primary-200'
 
   return (
@@ -145,7 +145,7 @@ const Portfolio = () => {
           ref={ref}
           initial={{ opacity: 0, y: 50 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.4 }}
+          transition={{ duration: 0.6 }}
           className="max-w-7xl mx-auto"
         >
           <CinematicSectionHeader
@@ -196,7 +196,7 @@ const Portfolio = () => {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.96 }}
                     transition={{
-                      duration: 0.15,
+                      duration: 0.35,
                       delay: index * 0.02,
                       ease: [0.22, 1, 0.36, 1],
                     }}
@@ -207,14 +207,14 @@ const Portfolio = () => {
                       <img
                         src={project.image}
                         alt={project.title}
-                        className="absolute inset-0 h-full w-full object-cover object-center filter grayscale transition-[filter] duration-150 ease-out group-hover:grayscale-0"
+                        className="absolute inset-0 h-full w-full object-cover object-center filter grayscale transition-[filter] duration-500 ease-out group-hover:grayscale-0"
                         style={{ objectPosition: project.imagePosition ?? 'center center' }}
                         onError={(e) => {
                           e.currentTarget.src = categoryFallbackImages[project.category] ?? categoryFallbackImages.web
                         }}
                       />
 
-                      <div className="absolute inset-0 flex items-center justify-center overflow-y-auto bg-black/85 p-3 opacity-0 transition-opacity duration-150 group-hover:opacity-100 sm:p-5">
+                      <div className="absolute inset-0 flex items-center justify-center overflow-y-auto bg-black/85 p-3 opacity-0 transition-opacity duration-500 group-hover:opacity-100 sm:p-5">
                         <div
                           className={`w-full rounded-2xl border border-white/15 bg-black/95 px-5 py-6 text-center shadow-2xl backdrop-blur-md sm:px-7 sm:py-8 ${
                             isLargeTile ? 'max-w-2xl' : 'max-w-md'

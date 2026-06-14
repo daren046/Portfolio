@@ -14,7 +14,7 @@ const ScrollProgress = () => {
 
   return (
     <motion.div
-      className="fixed top-0 left-0 right-0 z-[55] h-[2px] origin-left bg-primary-400/90 shadow-[0_0_10px_rgba(56,189,248,0.35)]"
+      className="fixed top-0 left-0 right-0 z-[55] h-[2px] origin-left bg-primary-400/90 shadow-[0_0_10px_rgba(80,104,224,0.35)]"
       style={{ scaleX: scrollYProgress }}
       initial={{ opacity: 0 }}
       animate={{ opacity: visible ? 1 : 0 }}

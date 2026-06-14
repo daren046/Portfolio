@@ -74,7 +74,7 @@ const Contact = () => {
           ref={ref}
           initial={{ opacity: 0, y: 50 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
           className="max-w-6xl mx-auto"
         >
           <CinematicSectionHeader
@@ -89,7 +89,7 @@ const Contact = () => {
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ delay: 0.6 }}
+              transition={{ delay: 0.45 }}
               className="cine-surface flex flex-col p-6 sm:p-8"
             >
               <h3 className="mb-6 text-sm font-mono font-bold uppercase tracking-[0.25em] text-primary-400/90">
@@ -117,7 +117,7 @@ const Contact = () => {
                       href={info.href}
                       initial={{ opacity: 0, x: -30 }}
                       animate={inView ? { opacity: 1, x: 0 } : {}}
-                      transition={{ delay: 0.8 + index * 0.1 }}
+                      transition={{ delay: 0.65 + index * 0.08 }}
                       className={`${rowClass} hover:border-primary-400/35`}
                     >
                       {inner}
@@ -127,7 +127,7 @@ const Contact = () => {
                       key={info.label}
                       initial={{ opacity: 0, x: -30 }}
                       animate={inView ? { opacity: 1, x: 0 } : {}}
-                      transition={{ delay: 0.8 + index * 0.1 }}
+                      transition={{ delay: 0.65 + index * 0.08 }}
                       className={rowClass}
                     >
                       {inner}
@@ -148,7 +148,7 @@ const Contact = () => {
                       href={social.href}
                       initial={{ opacity: 0, scale: 0 }}
                       animate={inView ? { opacity: 1, scale: 1 } : {}}
-                      transition={{ delay: 1.2 + index * 0.1 }}
+                      transition={{ delay: 0.95 + index * 0.08 }}
                       whileHover={{ scale: 1.1, y: -5 }}
                       whileTap={{ scale: 0.9 }}
                       className="w-12 h-12 rounded-xl border border-white/[0.12] bg-white/[0.03] flex items-center justify-center text-white/80 hover:text-primary-400 hover:border-primary-400/40 hover:bg-primary-400/5 transition-colors duration-300"
@@ -165,7 +165,7 @@ const Contact = () => {
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ delay: 0.8 }}
+              transition={{ delay: 0.72 }}
               className="cine-surface p-6 sm:p-8 lg:p-10"
             >
               <h3 className="text-sm font-mono font-bold tracking-[0.25em] text-primary-400/90 uppercase mb-6">
@@ -176,7 +176,7 @@ const Contact = () => {
                   <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={inView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ delay: 1 }}
+                    transition={{ delay: 0.82 }}
                   >
                     <label htmlFor="name" className="block text-xs font-mono text-white/55 mb-2 tracking-wider uppercase">
                       {t('contact.name')}
@@ -196,7 +196,7 @@ const Contact = () => {
                   <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={inView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ delay: 1.1 }}
+                    transition={{ delay: 0.9 }}
                   >
                     <label htmlFor="email" className="block text-xs font-mono text-white/55 mb-2 tracking-wider uppercase">
                       {t('contact.emailLabel')}
@@ -217,7 +217,7 @@ const Contact = () => {
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ delay: 1.2 }}
+                  transition={{ delay: 0.98 }}
                 >
                   <label htmlFor="subject" className="block text-xs font-mono text-white/55 mb-2 tracking-wider uppercase">
                     {t('contact.subject')}
@@ -237,7 +237,7 @@ const Contact = () => {
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ delay: 1.3 }}
+                  transition={{ delay: 1.05 }}
                 >
                   <label htmlFor="message" className="block text-xs font-mono text-white/55 mb-2 tracking-wider uppercase">
                     {t('contact.message')}
@@ -278,7 +278,7 @@ const Contact = () => {
                   disabled={isSubmitting}
                   initial={{ opacity: 0, y: 30 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ delay: 1.4 }}
+                  transition={{ delay: 1.12 }}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className="w-full btn-primary flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"

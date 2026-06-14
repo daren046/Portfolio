@@ -65,7 +65,7 @@ const SkillBar = ({
       ref={ref}
       initial={{ opacity: 0, y: 20 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ delay, duration: 0.6 }}
+      transition={{ delay, duration: 0.55 }}
       className="mb-6"
     >
       {/* Skill Name and Percentage */}
@@ -113,7 +113,7 @@ const SkillBar = ({
             animate={inView ? { x: '200%' } : {}}
             transition={{ 
               delay: delay + 1.5, 
-              duration: 0.8, 
+              duration: 0.65, 
               ease: "easeInOut" 
             }}
             className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent w-1/3 skew-x-12"

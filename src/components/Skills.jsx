@@ -165,7 +165,7 @@ function DeckBlock({ category, categoryLabel, inView, reduceMotion, catIndex, sh
                         className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-3 py-2.5 text-xs font-mono tracking-[0.2em] text-white/70 transition-colors hover:border-primary-400/40 hover:text-primary-300 group/detail"
                         onClick={() => {
                           const el = document.querySelector('#portfolio')
-                          el?.scrollIntoView({ behavior: 'smooth' })
+                          el?.scrollIntoView({ behavior: 'instant', block: 'start' })
                         }}
                       >
                         {t('skills.viewProjects')}
@@ -212,7 +212,7 @@ function DeckBlock({ category, categoryLabel, inView, reduceMotion, catIndex, sh
                     type="button"
                     onClick={() => setIndex(i)}
                     className={`
-                      relative shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-xl border overflow-hidden transition-all duration-200
+                      relative shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-xl border overflow-hidden transition-all duration-300
                       ${active
                         ? 'border-primary-400 ring-2 ring-primary-500/30 scale-105 z-20'
                         : 'border-white/10 opacity-70 hover:opacity-100 hover:border-white/25'
@@ -281,7 +281,7 @@ const Skills = () => {
           ref={ref}
           initial={{ opacity: 0, y: 50 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
           className="max-w-6xl mx-auto"
         >
           <CinematicSectionHeader
