@@ -44,7 +44,7 @@ export const translations = {
     skills: {
       eyebrow: 'Stack',
       title: 'COMPÉTENCES',
-      subtitle: 'Technologies & outils — parcours en deck, une catégorie à la fois.',
+      subtitle: 'Stack en un coup d’œil — le détail, c’est dans les projets.',
       all: 'TOUT',
       categories: {
         frontend: 'Frontend',
@@ -274,7 +274,7 @@ export const translations = {
     skills: {
       eyebrow: 'Stack',
       title: 'SKILLS',
-      subtitle: 'Technologies & tools — browse the deck, one category at a time.',
+      subtitle: 'Stack at a glance — see them in action in my projects.',
       all: 'ALL',
       categories: {
         frontend: 'Frontend',
