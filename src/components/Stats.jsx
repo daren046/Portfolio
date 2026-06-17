@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import { Code, Briefcase, Coffee, Award } from 'lucide-react'
 import CinematicSectionHeader from './CinematicSectionHeader'
 import { useLanguage } from '../i18n/LanguageContext'
+import { skillCategories } from '../i18n/translations'
 
 const AnimatedCounter = ({ value, duration = 2 }) => {
   const count = useMotionValue(0)
@@ -27,9 +28,11 @@ const Stats = () => {
     threshold: 0.2
   })
 
+  const techCount = skillCategories.reduce((sum, cat) => sum + cat.skills.length, 0)
+
   const stats = [
     { icon: Briefcase, value: '5', suffix: '+', label: t('stats.years'), color: '#6366F1' },
-    { icon: Code, value: '22', suffix: '', label: t('stats.techs'), color: '#8B5CF6' },
+    { icon: Code, value: String(techCount), suffix: '', label: t('stats.techs'), color: '#8B5CF6' },
     { icon: Award, value: '3', suffix: '', label: t('stats.githubProjects'), color: '#EC4899' },
     { icon: Coffee, value: '2', suffix: '', label: t('stats.internships'), color: '#F59E0B' },
   ]
