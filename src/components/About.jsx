@@ -17,7 +17,7 @@ const About = () => {
 
   const highlights = [
     { label: t('about.specialty'), value: 'Java / Spring Boot' },
-    { label: t('about.frontend'), value: 'React / TypeScript' },
+    { label: t('about.frontend'), value: 'React / Angular' },
     { label: t('about.education'), value: 'Master Gustave Eiffel' },
     { label: t('about.location'), value: 'Île-de-France' },
   ]
